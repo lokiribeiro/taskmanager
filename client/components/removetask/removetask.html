@@ -1,0 +1,31 @@
+<md-dialog style="opacity: 1 !important;" aria-label="Create a new user">
+  <form name="createuserForm" layout="column" layout-align="start center" layout-fill>
+    <md-dialog-content layout-wrap layout-fill layout-padding flex>
+    <div layout="row" flex>
+      <h2 style="font-weight:normal" ng-hide="createdNow">Remove task from project </h2>
+      <h2 style="font-weight:normal" ng-if="done">Processing</h2>
+      <h2 style="font-weight:normal" ng-if="createdNows"><md-icon md-svg-icon="../../assets/img/indigo_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Task removed</h2>
+      <span flex></span>
+    </div>
+    <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
+    <!-- end here -->
+    </md-dialog-content>
+    <md-dialog-actions layout="row"  layout-fill >
+      <!-- hide these -->
+    <md-button ng-hide="createdNow" ng-click="closeDialog()">
+      CANCEL
+    </md-button>
+    <span flex ng-hide="createdNow">
+    </span>
+      <md-button type="submit" ng-click="removeNow()" ng-hide="createdNow" class="md-primary">
+        REMOVE
+      </md-button>
+      <span flex ng-if="createdNows">
+      </span>
+      <!-- end hide -->
+        <md-button ng-if="createdNows" ng-click="closeDialog()" class="md-primary">
+          DONE
+        </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

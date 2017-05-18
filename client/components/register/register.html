@@ -1,46 +1,63 @@
-<md-content layout="row" layout-align="center start" layout-fill layout-margin>
-  <md-whiteframe layout="column" flex flex-md="50" flex-lg="50" flex-gt-lg="33" class="md-whiteframe-z2" layout-fill>
-
-    <md-toolbar class="md-primary md-tall" layout="column" layout-align="end" layout-fill>
-      <div layout="row" class="md-toolbar-tools md-toolbar-tools-bottom">
-        <h3 class="md-display-1">
-          Register a new account</h3>
-      </div>
-    </md-toolbar>
-
-    <div layout="column" layout-fill layout-margin layout-padding>
-
-      <div layout="row" layout-fill layout-margin>
-        <p class="md-body-2">Use your email?</p>
-      </div>
-
-      <form name="registerForm" layout="column" layout-fill layout-padding layout-margin>
-        <md-input-container >
-          <label>
-            Email
-          </label>
-          <input type="text" ng-model="register.credentials.email" placeholder="email" aria-label="email" required/>
-        </md-input-container>
-        <md-input-container >
-          <label>
-            Password
-          </label>
-          <input type="password" ng-model="register.credentials.password" placeholder="password" aria-label="password" required/>
-        </md-input-container>
-        <div layout="row" layout-align="end center">
-          <md-button class="md-raised md-primary" ng-click="registerUser(register.credentials)" aria-label="login" ng-disabled="register.registerForm.$invalid()">Register</md-button>
-        </div>
-      </form>
-      <md-toolbar ng-show="register.error" class="md-warn" layout="row" layout-fill layout-padding layout-margin>
-        <p class="md-body-1">{{ register.error }}</p>
-      </md-toolbar>
-
-      <md-divider></md-divider>
-      <div layout="row" layout-align="center">
-        <a class="md-button" href="/login">Already a user?</a>
-      </div>
-
+<div flex-md layout-align="center center" class="slide smooth">
+  <div flex layout="row" layout-align="center none" layout-wrap>
+      <md-card class="card card-1">
+        <md-card-content>
+          <form name="registerForm" layout="column" layout-align="space-between center" layout-fill layout-margin ng-submit="registerUser(register.credentials, profile)" layout-padding>
+            <!-- <img class="img-responsive" src="../../assets/img/apeclogo.png"> -->
+            <div layout="row" flex>
+      <h2 style="font-weight:normal; margin-top: 0px !important;" ng-hide="createdNow">Register a new account</h2>
+      <h2 style="font-weight:normal" ng-if="done">Creating new user</h2>
+      <h2 style="font-weight:normal" ng-if="createdNows"><md-icon md-svg-icon="../../assets/img/indigo_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Check your email to verify your account</h2>
+      <span flex></span>
     </div>
-
-  </md-whiteframe>
-</md-content>
+    <md-progress-circular md-mode="indeterminate" ng-show="done" ></md-progress-circular>
+            <md-input-container class="md-block" layout-fill ng-hide="createdNow">
+              <label>
+                Firstname
+              </label>
+              <input type="text" ng-model="profile.firstname" aria-label="email" required/>
+            </md-input-container>
+            <md-input-container class="md-block" layout-fill ng-hide="createdNow">
+              <label>
+                Lastname
+              </label>
+              <input type="text" ng-model="profile.lastname" aria-label="email" required/>
+            </md-input-container>
+            <md-input-container class="md-block" layout-fill ng-hide="createdNow">
+              <label>
+                Email
+              </label>
+              <input type="text" ng-model="register.credentials.email" aria-label="email" required/>
+            </md-input-container>
+            <md-input-container class="md-block" layout-fill ng-hide="createdNow">
+              <label>
+                Password
+              </label>
+              <input type="password" ng-model="register.credentials.password" aria-label="password" required/>
+            </md-input-container>
+            <div layout="row" layout-align="space-between center" layout-fill ng-hide="createdNow">
+              <md-button type="submit" class="md-raised md-primary" layout-fill aria-label="login" ng-disabled="register.registerForm.$invalid()">Register
+              </md-button>
+            </div>
+            <a  href="/" ng-hide="createdNow">Already a user?</a>
+            <a  href="/" ng-if="createdNows">Log in to your account</a>
+            <!-- <a href="#" ng-click="signOut()">Sign out</a> -->
+          </form>
+          <md-toolbar ng-show="register.error" class="md-warn" layout="row" layout-fill layout-padding layout-margin>
+            <p class="md-body-1">{{ register.error }}</p>
+          </md-toolbar>
+        </md-card-content>
+      </md-card>
+    </div>
+    <div layout="column" layout-fill layout-margin >
+      <!-- <div layout="row" layout-align="center">
+        <a class="md-button" href="/register" ng-disabled>Need an account?</a>
+      </div> -->
+      <!-- <div layout="row" layout-align="center end" >
+          <img alt="Squala Apps" style="width:230px; height:23px" class="img-responsive text-center" src="../../assets/img/wlogostrip_230x17_1x.png" />
+      </div>-->
+      <div layout="row" layout-align="center end">
+        <small class="text-muted">Task Manager &copy; 2017</small>
+      </div>
+    </div>
+</div>

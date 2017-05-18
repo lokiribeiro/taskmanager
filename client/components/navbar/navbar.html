@@ -1,0 +1,42 @@
+<div layout="row" flex>
+  <md-toolbar class="md-primary toolbars" md-scroll-shrink ng-if="true" >
+      <div class="md-toolbar-tools" >
+        <md-button class="md-icon-button" aria-label="Settings" ng-click="toggleLeft()"
+            ng-hide="isOpenLeft()">
+          <md-icon md-svg-icon="../../assets/img/white_menu.svg"></md-icon>
+        </md-button>
+        <span flex="50" layout-align="center center">
+          <h3 style="margin: 0px;">Task Manager</h3>
+        </span>
+        <span flex></span>
+        <md-menu md-position-mode="target-right target"  md-offset="0 30">
+          <md-card-avatar ng-click="$mdOpenMenu($event)" >
+            <md-tooltip md-direction="bottom">
+              My Profile
+            </md-tooltip>
+          <img ng-repeat="profile in profiles" class="avatar-2 img-responsive" ng-src="{{profile.profiles_profilephoto}}" >
+          </md-card-avatar>
+          <md-menu-content width="3" >
+            <md-menu-item >
+              <md-button ng-click="null" aria-label="profile">
+                  <div layout="row" flex ng-repeat="profile in profiles">
+                    <p flex>{{profile.name}}</p>
+                    <md-icon md-svg-icon="../../assets/img/black_person24.svg" style="margin: auto 3px auto 0;"></md-icon>
+                  </div>
+              </md-button>
+            </md-menu-item>
+            <md-menu-item >
+              <md-button ng-click="logout()">
+                  <div layout="row" flex>
+                    <p flex>Logout</p>
+                    <md-icon md-svg-icon="../../assets/img/black_logout24.svg" style="margin: auto 3px auto 0;"></md-icon>
+                  </div>
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+      </div>
+    </md-toolbar>
+    <md-content></md-content>
+</div>
+<navigation></navigation>

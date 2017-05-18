@@ -1,0 +1,13 @@
+<md-card>
+<md-tabs md-dynamic-height md-border-bottom>
+      <md-tab label="Tasks" ng-if="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInProject == projectID">
+          <tasklist ></tasklist>
+      </md-tab>
+      <md-tab label="Users" ng-if="$root.userLoggedInRole == 'superadmin'">
+          <userlist></userlist>
+      </md-tab>
+      <md-tab label="Submissions" ng-if="$root.userLoggedInRole == 'superadmin'">
+          <submission></submission>
+      </md-tab>
+    </md-tabs>
+</md-card>

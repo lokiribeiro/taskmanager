@@ -1,9 +1,9 @@
 <div flex-md layout-align="center center" class="slide smooth">
-  <div layout="column" layout-fill layout-padding>
+  <!-- <div layout="column" layout-fill layout-padding>
     <div layout="row" layout-align ="center none" layout-wrap>
       <img alt="SQUALA" style="width:220px; height:50px" class="img-responsive text-center" src="../../assets/img/logo.png" />
     </div>
-  </div>
+  </div>-->
     <!-- <h1 hide-xs style="font-weight: normal;" layout="row" layout-fill layout-align ="center center">All of Squala. One account.</h1> -->
   <div flex layout="row" layout-align="center none" layout-wrap>
       <md-card class="card card-1">
@@ -55,7 +55,11 @@
                 </div>
               </div>
             </div> -->
-            <a  href="/password">Forgot password?</a>
+            <a  href="/register">Sign up new account</a>
+            <span layout="row" layout-align="space-between center">
+              <md-button class="md-raised md-primary" g-login type="button">Github</md-button>
+              <md-button class="md-raised md-primary" fb-login type="button">facebook</md-button>
+            </span>
             <!-- <a href="#" ng-click="signOut()">Sign out</a> -->
           </form>
           <md-toolbar ng-if="loginerror" class="md-warn" layout="row" layout-fill layout-padding layout-margin>
@@ -68,11 +72,11 @@
       <!-- <div layout="row" layout-align="center">
         <a class="md-button" href="/register" ng-disabled>Need an account?</a>
       </div> -->
-      <div layout="row" layout-align="center end" >
+      <!-- <div layout="row" layout-align="center end" >
           <img alt="Squala Apps" style="width:230px; height:23px" class="img-responsive text-center" src="../../assets/img/wlogostrip_230x17_1x.png" />
-      </div>
+      </div>-->
       <div layout="row" layout-align="center end">
-        <small class="text-muted">Squala School Management Platform  &copy; 2017</small>
+        <small class="text-muted">Task Manager &copy; 2017</small>
       </div>
     </div>
 </div>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.4, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="48px"
+  height="48px" viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve">
+<g id="Label">
+</g>
+<g id="Icon">
+ <g>
+  <rect opacity="0" fill="#3367D6" width="48" height="47.978"/>
+  <line fill="none" stroke="#87CEAC" stroke-miterlimit="10" x1="12.663" y1="27.172" x2="16.812" y2="27.172"/>
+  <line fill="none" stroke="#87CEAC" stroke-miterlimit="10" x1="18.342" y1="27.172" x2="22.489" y2="27.172"/>
+  <line fill="none" stroke="#87CEAC" stroke-miterlimit="10" x1="24.021" y1="27.172" x2="28.167" y2="27.172"/>
+  
+   <radialGradient id="SVGID_2_" cx="73.5166" cy="-104.124" r="150.2832" gradientTransform="matrix(0.32 0 0 0.3199 -16.51 40.2611)" gradientUnits="userSpaceOnUse">
+   <stop  offset="0" style="stop-color:#EEEEEE"/>
+   <stop  offset="0.4322" style="stop-color:#E6E6E6"/>
+   <stop  offset="1" style="stop-color:#E1E1E1"/>
+  </radialGradient>
+  <path fill="url(#SVGID_2_)" d="M48,44.779c0,1.767-1.433,3.199-3.2,3.199H3.2c-1.768,0-3.2-1.432-3.2-3.199V3.199
+   C0,1.432,1.433,0,3.2,0h41.6C46.567,0,48,1.432,48,3.199V44.779z"/>
+  <rect x="8.522" y="7.188" fill="#57BB8A" width="23.787" height="40.79"/>
+  <linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="-7.0752" y1="23.5454" x2="27.6922" y2="41.7824">
+   <stop  offset="0" style="stop-color:#231F20"/>
+   <stop  offset="1" style="stop-color:#231F20;stop-opacity:0"/>
+  </linearGradient>
+  <polygon opacity="0.5" fill="url(#SVGID_3_)" points="17.717,25.1 40.628,48 17.717,48   "/>
+  <g>
+   <rect x="12.663" y="11.14" fill="#0F9D58" width="4.148" height="4.146"/>
+   <rect x="18.342" y="11.14" fill="#0F9D58" width="4.147" height="4.146"/>
+   <rect x="24.021" y="11.14" fill="#0F9D58" width="4.146" height="4.146"/>
+  </g>
+  <g>
+   <rect x="12.663" y="17.083" fill="#0F9D58" width="4.148" height="4.145"/>
+   <rect x="18.342" y="17.083" fill="#0F9D58" width="4.147" height="4.145"/>
+   <rect x="24.021" y="17.083" fill="#0F9D58" width="4.146" height="4.145"/>
+  </g>
+  <g>
+   <rect x="12.663" y="23.027" fill="#0F9D58" width="4.148" height="4.145"/>
+   <rect x="18.342" y="23.027" fill="#0F9D58" width="4.147" height="4.145"/>
+   <rect x="24.021" y="23.027" fill="#0F9D58" width="4.146" height="4.145"/>
+  </g>
+  <path fill="#0091EA" d="M0,44.779c0,1.767,1.433,3.199,3.2,3.199h14.517V25.1H0V44.779z"/>
+  <rect x="2.735" y="29.249" fill="#0277BD" width="4.148" height="4.145"/>
+  <rect x="8.735" y="29.249" fill="#0277BD" width="4.147" height="4.145"/>
+  <rect x="2.735" y="35.246" fill="#0277BD" width="4.148" height="4.145"/>
+  <rect x="8.735" y="35.246" fill="#0277BD" width="4.147" height="4.145"/>
+  <rect x="2.735" y="41.243" fill="#0277BD" width="4.148" height="4.146"/>
+  <rect x="8.735" y="41.243" fill="#0277BD" width="4.147" height="4.146"/>
+  <g>
+   <rect y="24.94" fill="#40C4FF" width="17.717" height="0.32"/>
+  </g>
+  <g>
+   <rect x="2.735" y="33.233" fill="#03A9F4" width="4.148" height="0.32"/>
+  </g>
+  <g>
+   <rect x="12.663" y="15.125" fill="#87CEAC" width="4.148" height="0.319"/>
+  </g>
+  <g>
+   <rect x="18.342" y="15.125" fill="#87CEAC" width="4.147" height="0.319"/>
+  </g>
+  <g>
+   <rect x="24.021" y="15.125" fill="#87CEAC" width="4.146" height="0.319"/>
+  </g>
+  <g>
+   <rect x="12.663" y="21.068" fill="#87CEAC" width="4.148" height="0.32"/>
+  </g>
+  <g>
+   <rect x="18.342" y="21.068" fill="#87CEAC" width="4.147" height="0.32"/>
+  </g>
+  <g>
+   <rect x="18.342" y="27.075" fill="#87CEAC" width="4.147" height="0.319"/>
+  </g>
+  <line fill="none" stroke="#87CEAC" stroke-miterlimit="10" x1="24.021" y1="27.235" x2="28.167" y2="27.235"/>
+  <g>
+   <rect x="8.735" y="33.233" fill="#03A9F4" width="4.147" height="0.32"/>
+  </g>
+  <g>
+   <rect x="2.735" y="39.231" fill="#03A9F4" width="4.148" height="0.32"/>
+  </g>
+  <g>
+   <rect x="8.735" y="39.231" fill="#03A9F4" width="4.147" height="0.32"/>
+  </g>
+  <g>
+   <rect x="2.735" y="45.228" fill="#03A9F4" width="4.148" height="0.32"/>
+  </g>
+  <g>
+   <rect x="8.735" y="45.228" fill="#03A9F4" width="4.147" height="0.32"/>
+  </g>
+  <linearGradient id="SVGID_4_" gradientUnits="userSpaceOnUse" x1="11.7012" y1="7.9893" x2="39.2601" y2="22.4451">
+   <stop  offset="0" style="stop-color:#231F20"/>
+   <stop  offset="1" style="stop-color:#231F20;stop-opacity:0"/>
+  </linearGradient>
+  <polygon opacity="0.5" fill="url(#SVGID_4_)" points="48,23.022 32.33,7.359 32.33,30.26 48,30.26   "/>
+  <g>
+   <rect x="8.522" y="7.235" fill="#87CEAC" width="23.787" height="0.319"/>
+  </g>
+  <path fill="#FFCD40" d="M48,44.779V18.81H22.623v29.168H44.8C46.567,47.978,48,46.546,48,44.779z"/>
+  <g>
+   <rect x="26.735" y="23.09" fill="#CC9200" width="4.147" height="4.146"/>
+   <rect x="32.414" y="23.09" fill="#CC9200" width="4.147" height="4.146"/>
+   <rect x="38.093" y="23.09" fill="#CC9200" width="4.146" height="4.146"/>
+  </g>
+  <g>
+   <rect x="26.735" y="29.034" fill="#CC9200" width="4.147" height="4.145"/>
+   <rect x="32.414" y="29.034" fill="#CC9200" width="4.147" height="4.145"/>
+   <rect x="38.093" y="29.034" fill="#CC9200" width="4.146" height="4.145"/>
+  </g>
+  <g>
+   <rect x="22.595" y="18.649" fill="#FFEB3B" width="25.405" height="0.32"/>
+  </g>
+  <g>
+   <rect x="26.735" y="27.013" fill="#FFEB3B" width="4.147" height="0.32"/>
+  </g>
+  <g>
+   <rect x="32.414" y="27.013" fill="#FFEB3B" width="4.147" height="0.32"/>
+  </g>
+  <g>
+   <rect x="38.093" y="27.013" fill="#FFEB3B" width="4.146" height="0.32"/>
+  </g>
+  <g>
+   <rect x="26.735" y="33.019" fill="#FFEB3B" width="4.147" height="0.32"/>
+  </g>
+  <g>
+   <rect x="32.414" y="33.019" fill="#FFEB3B" width="4.147" height="0.32"/>
+  </g>
+  <g>
+   <rect x="38.093" y="33.019" fill="#FFEB3B" width="4.146" height="0.32"/>
+  </g>
+ </g>
+</g>
+</svg>

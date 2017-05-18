@@ -1,0 +1,52 @@
+<md-toolbar class="md-primary md-hue-2" layout="row" layout-align="center center">
+  <div flex="100" flex-gt-sm="70" layout="column" layout-fill>
+    <div class="md-toolbar-tools">
+      <a href="/" >
+      <md-tooltip md-direction="bottom">
+        Back
+      </md-tooltip>
+      <md-icon md-svg-icon="../../assets/img/white_backarrow24.svg"></md-icon>
+      </a>
+      <h2 class="md-flex" style="padding-left: 24px !important;">view projects</h2>
+      <span flex></span>
+    </div>
+  </div>
+</md-toolbar>
+
+<div class="anim-slide-below-fade" data-anim-speed="500">
+<md-content flex layout-padding style="background-color:transparent !important;" layout="row" layout-align="center center" layout-fill>
+  <div layout="column" layout-align="center center" flex="100" flex-gt-sm="70" layout-padding >
+    <div layout="column" layout-align="center center" layout-fill ng-cloak style="padding: 16px 16px 16px 16px !important;">
+
+      <md-card layout-wrap layout-fill>
+        <md-toolbar class="md-table-toolbar md-primary" layout="row" layout-align="space-between stretch" layout-padding layout-fill>
+        <div flex layout="column" layout-align="center center">
+          <img ng-src="../../assets/img/school_icon48.svg" alt="photo"/>
+        </div>
+        <div class="md-list-item-text" flex="60" layout="column" layout-align="start start" ng-repeat="project in projects">
+          <span class="md-headline">{{project.project_name}}</span>
+            <span class="md-subhead">{{project.field}} </span>
+        </div>
+        <div layout="row" layout-align="end start" flex="20" layout-fill>
+          <md-button class="md-icon-button" aria-label="delete" ng-click="openDialog($event)" ng-show="$root.userLoggedInRole == 'superadmin'" >
+            <md-tooltip md-direction="bottom">
+              Delete project
+            </md-tooltip>
+            <md-icon md-svg-icon="../../assets/img/white_delete24.svg"></md-icon>
+          </md-button>          
+        </div>
+      </md-toolbar>
+      </md-card>
+      </div>
+
+
+
+      <div flex="100" flex-gt-sm="60"  layout="column" layout-fill layout-wrap>
+      <projectdetails></projectdetails>
+      </div>
+
+
+
+  </div>
+</md-content>
+</div>

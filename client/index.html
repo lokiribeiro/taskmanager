@@ -24,6 +24,7 @@
 <body ng-app="taskManager" class="ng-cloak">
     <div layout="row" layout-wrap class="md-primary">
       <div class="app-header-fixed" flex="100">
+        <navbar class="app-header visible" ng-if="$root.userLoggedIn" ng-cloak></navbar>
         <md-progress-linear ng-if="loading" md-mode="indeterminate" class="md-primary md-hue-1"></md-progress-linear>
       </div>
       <div flex="100" class="fluids">

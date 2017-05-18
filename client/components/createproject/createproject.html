@@ -1,0 +1,71 @@
+<md-dialog style="opacity: 1 !important;" aria-label="Create a new user" layout="column" layout-align="start center" flex="100">
+  <form name="createuserForm" ng-submit="createProject(create.register)">
+    <md-dialog-content layout="column" layout-align="start start" layout-wrap layout-fill layout-padding flex>
+    <div layout="row" flex>
+      <h2 style="font-weight:normal" ng-hide="createdNow">Add Project </h2>
+      <h2 style="font-weight:normal" ng-if="done">Creating project</h2>
+      <h2 style="font-weight:normal" ng-if="createdNows"><md-icon md-svg-icon="../../assets/img/indigo_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Created new project</h2>
+      <span flex></span>
+    </div>
+    <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
+
+    <!-- hide here -->
+    <span layout="column" ng-hide="createdNow" layout-fill>
+    <md-input-container flex="100"  md-no-float class="md-block" style="margin: 10px 0 !important;">
+        <input ng-model="create.register.projectName" aria-label="projectName" type="text" placeholder="Project Name" required>
+    </md-input-container>
+    </span>
+    <!-- address -->
+      <span layout="row" flex ng-hide="createdNow" layout-fill>
+      <md-input-container  md-no-float class="md-block" style="margin: 10px 0 !important;">
+       <input ng-model="create.register.timeline" aria-label="timeline" type="text" placeholder="Timeline" >
+      </md-input-container>
+      <md-input-container md-no-float class="md-block" style="margin: 10px 0 !important;">
+       <input ng-model="create.register.field" aria-label="field" type="text" placeholder="Field" required>
+      </md-input-container>
+    </span>
+    <span layout="column" ng-hide="createdNow" layout-fill>
+    <md-input-container flex="100"  md-no-float class="md-block" style="margin: 10px 0 !important;">
+        <input ng-model="create.register.location" aria-label="location" type="text" placeholder="Location" >
+    </md-input-container>
+    </span>
+    <!-- end here -->
+    <md-toolbar ng-show="existing" class="md-primary" layout="row" layout-fill layout-padding layout-margin>
+    <p class="md-body-1">School already registered</p>
+    </md-toolbar>
+    <md-toolbar ng-if="loginerror" class="md-accent" layout="row" layout-fill layout-padding layout-margin>
+      <p class="md-body-1">{{ loginerror }}</p>
+    </md-toolbar>
+    <span layout="column" layout-align="start start" flex ng-if="createdNows">
+      <span layout="row">
+      <p>
+        A new project named <b>{{registered.projectName}} </b> has been created
+      </p>
+      </span>
+      <span layout="row" layout-align="start start" layout-fill>
+      <p>
+        Field is <b>{{registered.field}}</b>
+      </p>
+    </span>
+    </span>
+  </md-dialog-content>
+    <md-dialog-actions >
+      <span layout="row" layout-align="space-between start" layout-fill>
+      <!-- hide these -->
+    <md-button ng-hide="createdNow" ng-click="closeDialog()">
+      CANCEL
+    </md-button>
+      <md-button type="submit" ng-hide="createdNow" class="md-primary">
+        CREATE
+      </md-button>
+      <!-- end hide -->
+      <md-button ng-if="createdNows" ng-click="createAnother()">
+        ADD ANOTHER PROJECT
+      </md-button>
+        <md-button ng-if="createdNows" ng-click="closeDialog()" class="md-primary">
+          DONE
+        </md-button>
+      </span>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

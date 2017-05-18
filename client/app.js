@@ -8,14 +8,18 @@ import utilsPagination from 'angular-utils-pagination';
 import 'angular-simple-logger';
 import ngMaterial from 'angular-material';
 import ngAnimate from 'angular-animate';
+import '../imports/ui/anim-in-out.js';
+import 'angularjs-social-login';
+import mdDataTable from 'angular-material-data-table';
 
 export var app = angular.module('taskManager',
-    [angularMeteor, ngMaterial, uiRouter, 'accounts.ui', ngAnimate]).value('THROTTLE_MILLISECONDS', 250);
+    [angularMeteor, ngMaterial, uiRouter, 'accounts.ui', ngAnimate, 'anim-in-out', 'socialLogin', mdDataTable]).value('THROTTLE_MILLISECONDS', 250);
 
-app.config(function ($locationProvider, $urlRouterProvider, $stateProvider, $mdThemingProvider, $mdIconProvider, $provide) {
+app.config(function ($locationProvider, $urlRouterProvider, $stateProvider, $mdThemingProvider, $mdIconProvider, $provide, socialProvider) {
     'ngInject';
 
     $locationProvider.html5Mode(true);
+    socialProvider.setFbKey({appId: '1822142978105305', apiVersion: 'v2.9'});
 
     $stateProvider
     .state(
@@ -99,7 +103,41 @@ app.config(function ($locationProvider, $urlRouterProvider, $stateProvider, $mdT
               $rootScope.stateHolder = $stateParams.stateHolder;
           }
       })
-      .state('Profile', {
+      .state('Projectpage', {
+            url:'/:stateHolder/PRJP/:userID/:projectID',
+            template: '<projectpage></projectpage>',
+            resolve: {
+                currentUser($q, $state) {
+                    if (!Meteor.userId()) {
+                        return $q.reject('AUTH_REQUIRED');
+                    } else {
+                      return $q.resolve();
+                    };
+                }
+            },
+            onEnter: function($rootScope, $stateParams, $state) {
+                $rootScope.stateHolder = $stateParams.stateHolder;
+                $rootScope.projectID = $stateParams.projectID;
+            }
+        })
+        .state('Task', {
+              url:'/:stateHolder/TSKP/:userID/:taskID',
+              template: '<taskprofile></taskprofile>',
+              resolve: {
+                  currentUser($q, $state) {
+                      if (!Meteor.userId()) {
+                          return $q.reject('AUTH_REQUIRED');
+                      } else {
+                        return $q.resolve();
+                      };
+                  }
+              },
+              onEnter: function($rootScope, $stateParams, $state) {
+                  $rootScope.stateHolder = $stateParams.stateHolder;
+                  $rootScope.taskID = $stateParams.taskID;
+              }
+          })
+          .state('Profile', {
             url:'/:stateHolder/PRFl/:userID',
             template: '<profile></profile>',
             resolve: {
@@ -117,28 +155,96 @@ app.config(function ($locationProvider, $urlRouterProvider, $stateProvider, $mdT
         });
 
     $urlRouterProvider.otherwise('/not-found');
+
+    $mdThemingProvider.definePalette('squalaPalette', {
+      '50': 'C788CE',
+    '100': 'BF75C7',
+    '200': 'B663BF',
+    '300': 'AE51B8',
+    '400': 'A046AA',
+    '500': '8F3E98',
+    '600': '7E3786',
+    '700': '6D2F74',
+    '800': '5C2862',
+    '900': '4B2150',
+    'A100': 'ff8a80',
+    'A200': 'ff5252',
+    'A400': 'ff1744',
+    'A700': 'd50000',
+    'contrastDefaultColor': 'light',    // whether, by default, text (contrast)
+                                        // on this palette should be dark or light
+
+    'contrastDarkColors': ['50', '100', //hues which contrast should be 'dark' by default
+     '200', '300', '400', 'A100'],
+    'contrastLightColors': undefined    // could also specify this if default was 'dark'
+    });
+
+    //disable theme generation
+    //$mdThemingProvider.generateThemesOnDemand(true);
+
+    $mdThemingProvider.theme('default')
+    .primaryPalette('indigo')
+    .accentPalette('blue');
+
+    $mdThemingProvider.theme('Project')
+    .primaryPalette('amber')
+    .accentPalette('orange');
+
+    $mdThemingProvider.theme('Admissions')
+    .primaryPalette('amber')
+    .accentPalette('orange');
+
+    $mdThemingProvider.theme('Assessment')
+    .primaryPalette('light-green')
+    .accentPalette('lime');
+
+    $mdThemingProvider.theme('Classroom')
+    .primaryPalette('light-blue')
+    .accentPalette('indigo');
+
+    $mdThemingProvider.theme('Collect')
+    .primaryPalette('red')
+    .accentPalette('pink');
+
+    $mdThemingProvider.theme('Rapido')
+    .primaryPalette('orange')
+    .accentPalette('amber');
+
+    $mdThemingProvider.theme('Scheduler')
+    .primaryPalette('yellow')
+    .accentPalette('orange');
+
+    $mdThemingProvider.theme('Dashboard')
+    .primaryPalette('indigo')
+    .accentPalette('blue');
+
+    $mdThemingProvider.alwaysWatchTheme(true);
+
+    $provide.value('themeProvider', $mdThemingProvider);
   });
 
 app.run(function ($state, $rootScope, $stateParams, $mdTheming) {
     'ngInject';
     $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error){
-        switch(error) {
-          case "AUTH_REQUIRED":
-            $state.go('login');
-          break;
-          case "FORBIDDEN":
-            $state.go('forbidden');
-          break;
-          case "UNAUTHORIZED":
-            $state.go('unauthorized');
-          break;
-          case "LOGGED_IN":
-            $state.go('Dashboard');
-          break;
-          default:
-            $state.go('not-found');
-        }
-    });
+      switch(error) {
+        case "AUTH_REQUIRED":
+         console.log('login');
+          $state.go('login');
+        break;
+        case "FORBIDDEN":
+          $state.go('forbidden');
+        break;
+        case "UNAUTHORIZED":
+          $state.go('unauthorized');
+        break;
+        case "LOGGED_IN":
+        console.log('dashboard');
+          $state.go('Dashboard');
+        break;
+        default:
+          $state.go('not-found');
+      }
+  });
     // handle logout event and redirect user to home page
     var _logout = Meteor.logout;
     Meteor.logout = function customLogout() {
@@ -173,6 +279,15 @@ app.run(function ($state, $rootScope, $stateParams, $mdTheming) {
             console.info('branch', branch);
           }
           return branch;
+        },
+        userLoggedInProject(){
+          var projectId = null;
+          if(Meteor.user()){
+            var details = Meteor.user();
+            projectId = details.user_projectID;
+            console.info('projectId', projectId);
+          }
+          return projectId;
         }
     });
 

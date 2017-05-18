@@ -1,0 +1,50 @@
+<md-sidenav flex class="md-sidenav-left md-whiteframe-4dp" md-component-id="left" md-disable-scroll-target style="position:fixed;top: 0;" >
+    <div layout="row" layout-align="start center" layout-padding lyout-fill layout-wrap>
+        <h2 style="font-weight:normal;">My {{$root.stateHolder}}</h2>
+      </div>
+    <md-divider></md-divider>
+      <md-content class="md-primary" layout-padding>
+        <md-list class="md-primary" flex>
+        <a  class="md-primary" ng-repeat="navigation in navigations" href="/{{navigation.appName}}/{{navigation.menuRoute}}/{{(navigation.menuRoute == 'HRle' || navigation.menuRoute == 'HRSp') ? ($root.userID + '/' ): $root.userID}}"  ng-click="toggleLeft()">
+          <md-list-item class="md-2-line" ng-click="null" ng-hide="$root.userLoggedInRole != 'superadmin' && (navigation.menuItem == 'Users' || navigation.menuItem == 'Roles' || navigation.menuItem == 'Responsibilities')">
+            <md-icon md-svg-icon="{{navigation.menuIcon}}" style="margin: auto 3px auto 0;"></md-icon>
+            <div class="md-list-item-text" layout="column">
+              <h3 class="md-primary"> {{navigation.menuItem}} </h3>
+            </div>
+          </md-list-item>
+        </a>
+        <a  class="md-primary" href="/"  ng-click="toggleLeft()">
+          <md-list-item class="md-2-line" ng-click="null" ng-hide="$root.userLoggedInRole != 'superadmin' && (navigation.menuItem == 'Users' || navigation.menuItem == 'Roles' || navigation.menuItem == 'Responsibilities')">
+            <md-icon md-svg-icon="../../assets/img/black_home24.svg" style="margin: auto 3px auto 0;"></md-icon>
+            <div class="md-list-item-text" layout="column">
+              <h3 class="md-primary"> Dashboard </h3>
+            </div>
+          </md-list-item>
+        </a>
+        <!-- <md-divider ></md-divider>
+        <md-list-item class="md-2-line" ng-click="null">
+          <md-icon md-svg-icon="../../assets/img/black_settings24.svg" style="margin: auto 3px auto 0;"></md-icon>
+          <div class="md-list-item-text" layout="column">
+            <h3> Settings </h3>
+          </div>
+        </md-list-item>
+        <md-list-item class="md-2-line" ng-click="null">
+          <md-icon md-svg-icon="../../assets/img/black_help24.svg" style="margin: auto 3px auto 0;"></md-icon>
+          <div class="md-list-item-text" layout="column">
+            <h3> Help </h3>
+          </div>
+        </md-list-item> -->
+      </md-list>
+      </md-content>
+      <md-content class="app-footer">
+        <span layout="column" layout-align="start start" flex="100">
+        <span layout="row"  >
+          Privacy Terms | Terms of Service
+        </span>
+        <span layout="row" layout-align="start start">
+        <i class="fa fa-long-arrow-up"></i>
+        <span>&copy; 2017 Task Manager</span>
+      </span>
+      </span>
+    </md-content>
+</md-sidenav>

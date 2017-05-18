@@ -5,7 +5,7 @@ import { name as Register } from '../register/register';
 
 class LoginCtrl {
 
-  constructor($scope, $reactive, $state){
+  constructor($scope, $reactive, $rootScope, $state){
     'ngInject';
 
      $('body').addClass('loginP');
@@ -53,6 +53,10 @@ class LoginCtrl {
       console.log('User signed out.');
     });
   };
+
+  $rootScope.$on('event:social-sign-in-success', function(event, userDetails){
+    console.info('userDetails', userDetails);
+  })
 
   }
 }

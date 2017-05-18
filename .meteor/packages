@@ -20,3 +20,5 @@ dotansimha:accounts-ui-angular
 accounts-facebook
 accounts-twitter
 angular-templates
+email
+accounts-password

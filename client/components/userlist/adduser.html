@@ -1,0 +1,48 @@
+<md-dialog style="opacity: 1 !important;" aria-label="Create a new user" >
+  <form name="createuserForm" layout="column" layout-align="start center">
+    <md-dialog-content layout="column" layout-align="start start" layout-wrap layout-fill layout-padding flex>
+    <div layout="row" flex>
+      <h2 style="font-weight:normal" ng-hide="createdNow">Add user to this project</h2>
+      <h2 style="font-weight:normal" ng-if="done">Processing</h2>
+      <h2 style="font-weight:normal" ng-if="createdNows"><md-icon md-svg-icon="../../assets/img/indigo_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Added user</h2>
+    </div>
+    <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
+
+    <!-- address -->
+    <span layout="column" ng-hide="createdNow" layout-fill>
+      <md-input-container flex="100"  class="md-block" style="margin: 10px 0 !important;">
+        <label>users</label>
+        <md-icon md-svg-icon="../../assets/img/black_person24.svg"></md-icon>
+        <md-select aria-label="user" ng-model="create.register.user" md-on-close="clearSearchTerm()"  data-md-container-class="selectdemoSelectHeader" multiple>
+          <md-select-header class="demo-select-header">
+              <input ng-model="searchTerm"
+                     type="search"
+                     placeholder="Search for users"
+                     class="demo-header-searchbox md-text">
+            </md-select-header>
+            <md-option ng-value="user" ng-repeat="user in users | filter:searchTerm" ng-hide="user._id == $root.userID">{{user.name}}</md-option>
+        </md-select>
+        <p class="md-caption">Add users to this project. </p>
+      </md-input-container>
+    </span>
+    <span layout="row" ng-hide="createdNow">
+    </span>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-align="space-between center" layout-fill>
+      <!-- hide these -->
+    <md-button ng-hide="createdNow" ng-click="closeDialog()">
+      CANCEL
+    </md-button>
+      <md-button type="submit" ng-click="addUsers(create.register)" ng-hide="createdNow" class="md-primary">
+        ADD
+      </md-button>
+      <!-- end hide -->
+      <md-button ng-if="createdNows" ng-click="createAnother()">
+        ADD ANOTHER
+      </md-button>
+        <md-button ng-if="createdNows" ng-click="closeDialog()" class="md-primary">
+          DONE
+        </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
