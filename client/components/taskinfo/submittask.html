@@ -1,0 +1,39 @@
+<md-dialog style="opacity: 1 !important;" aria-label="Create a new user" layout="column" layout-align="start center">
+  <form name="createuserForm" ng-submit="submitTask()">
+    <md-dialog-content layout="column" layout-align="start start" layout-wrap layout-fill layout-padding flex>
+    <div layout="row" flex>
+      <h2 style="font-weight:normal" ng-hide="createdNow">Submit Task? </h2>
+      <h2 style="font-weight:normal" ng-if="done">Submitting Task</h2>
+      <h2 style="font-weight:normal" ng-if="createdNows"><md-icon md-svg-icon="../../assets/img/indigo_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Task Submitted</h2>
+      <span flex></span>
+    </div>
+    <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
+
+    <!-- hide here -->
+    <!-- address -->
+    <!-- end here -->
+    <span layout="column" layout-align="start start" flex ng-if="createdNows">
+      <span layout="row">
+      <p>
+        Task has been submitted.
+      </p>
+      </span>
+    </span>
+  </md-dialog-content>
+    <md-dialog-actions >
+      <span layout="row" layout-align="space-between start" layout-fill>
+      <!-- hide these -->
+    <md-button ng-hide="createdNow" ng-click="closeDialog()">
+      CANCEL
+    </md-button>
+      <md-button type="submit" ng-hide="createdNow" class="md-primary">
+        SUBMIT
+      </md-button>
+      <!-- end hide -->    
+        <md-button ng-if="createdNows" ng-click="closeDialog()" class="md-primary">
+          DONE
+        </md-button>
+      </span>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

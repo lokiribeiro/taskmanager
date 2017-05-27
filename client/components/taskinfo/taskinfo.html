@@ -2,7 +2,9 @@
 <span ng-repeat="task in tasks">
 <div layout="row" layout-align="start start" layout-wrap >
   <div layout="column" layout-align="start start"  flex-gt-md="100" flex="100" flex-gt-xs="100" layout-padding >
-    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="task.details">INSTRUCTIONS</h5>
+    <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="task.details">INSTRUCTIONS
+      <span ng-if="!notyet"> (SUBMITTED) </span>
+    </h5>
     <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;">{{task.details}}</h5>
     <span layout="row" flex ng-if="show" layout-fill>
     <md-input-container  layout-fill md-no-float class="md-block" style="margin: 10px 0 !important;">
@@ -16,6 +18,9 @@
 </div>
 </div>
 <div layout="row">
+  <md-button class="md-primary" md-no-ink aria-label="create" ng-click="submitNow($event, task._id)" ng-hide="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'" ng-if="notyet">
+    Submit Task
+  </md-button>
   <md-button class="md-primary" md-no-ink aria-label="create" ng-click="editNow()" ng-if="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">
     Edit Task Details
   </md-button>

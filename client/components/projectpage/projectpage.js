@@ -263,13 +263,6 @@ class ProjectpageCtrl{
         });
       }
 
-      $scope.openRole = function () {
-        $state.go('Headmasterrole', {stateHolder : 'Headmaster', userID : Meteor.userId()});
-      }
-
-      $scope.openResp = function () {
-        $state.go('Headmasterresp', {stateHolder : 'Headmaster', userID : Meteor.userId()});
-      }
 
 
 

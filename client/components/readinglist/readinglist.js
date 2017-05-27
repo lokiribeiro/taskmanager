@@ -8,12 +8,16 @@ class ReadinglistCtrl{
       'ngInject';
 
       $scope.taskID = $rootScope.taskID;
+      $scope.userID = $rootScope.userID;
 
       $scope.show = false;
+      $scope.switches = 'true';
 
       $scope.subscribe('tasks2', function () {
           return [$scope.getReactively('taskID')];
       });
+
+      $scope.subscribe('users2');
 
       $scope.helpers({
         tasks(){
@@ -25,6 +29,13 @@ class ReadinglistCtrl{
           var proNum = tasks.count();
           console.info('pronum', proNum);
           return tasks;
+        },
+        users(){
+          var userID = $scope.userID;
+          var userDetail = Meteor.users.find(userID);
+          var count = userDetail.count();
+          console.info('count', count);
+          return userDetail;
         }
       })//helpers
 
@@ -179,6 +190,64 @@ class ReadinglistCtrl{
        $scope.doneSearching = false;
      }
     });
+
+  }
+
+  $scope.markRead = function(readingTitle) {
+    var userID = $scope.userID;
+    var readingTitle = readingTitle;
+    var taskID = $scope.taskID;
+    var activity = 'done';
+
+    var userDetail = Meteor.users.find(userID);
+    userDetail.forEach(function(userapp){
+      if(userapp.readingList){
+        var counter = userapp.readingList.length;
+        for(x=0;x<counter;x++){
+          if(userapp.readingList[x].readingTitle == readingTitle){
+            console.info('found', userapp.readingList[x].readingTitle);
+            activity = 'undone'
+          }
+        }
+      }
+    });
+
+
+
+    Meteor.call('upsertDoneReading', taskID, readingTitle, userID, activity, function(err, result) {
+          if (err) {
+
+                                 var toasted = 'Error updating reading list.';
+                                 var pinTo = $scope.getToastPosition();
+                                 $mdToast.show(
+                                   $mdToast.simple()
+                                   .textContent(toasted)
+                                   .position(pinTo )
+                                   .hideDelay(3000)
+                                   .action('HIDE')
+                                   .highlightAction(true)
+                                   .highlightClass('md-accent')
+                                 );
+                                 $scope.doneSearching = false;
+
+
+         } else {
+           var toasted = 'Reading list updated';
+           var pinTo = $scope.getToastPosition();
+           $mdToast.show(
+             $mdToast.simple()
+             .textContent(toasted)
+             .position(pinTo )
+             .hideDelay(3000)
+             .action('HIDE')
+             .highlightAction(true)
+             .highlightClass('md-accent')
+           );
+           $scope.doneSearching = false;
+
+         }
+       });
+
 
   }
 

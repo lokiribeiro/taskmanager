@@ -71,7 +71,8 @@ class TasklistCtrl{
       $scope.openProfile2 = function (selected2) {
         console.info('selected:', selected2[0]._id);
         var taskID = selected2[0]._id;
-        $state.go('Task', {stateHolder : 'Task', userID : Meteor.userId(), taskID : taskID});
+        var projectID = $scope.projectID;
+        $state.go('Task', {stateHolder : 'Task', userID : Meteor.userId(), projectID: projectID, taskID : taskID});
       }
 
       $scope.getToastPosition = function() {

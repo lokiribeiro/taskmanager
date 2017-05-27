@@ -5,7 +5,7 @@ import Projects from '/imports/models/projects.js';
 import Tasks from '/imports/models/tasks.js';
 
 
-class UserlistCtrl{
+class SubmissionCtrl{
 
   constructor($scope, $timeout, $mdSidenav, $element, $log, $mdDialog, $state, $q, $mdToast, $rootScope){
       'ngInject';
@@ -410,7 +410,7 @@ class UserlistCtrl{
                         $scope.createdNow = true;
                         $scope.done = false;
                       }
-                    });                  
+                    });
                   } else {
                     console.log('nothing to do');
                     $scope.done = false;
@@ -437,16 +437,16 @@ class UserlistCtrl{
                 ev.stopPropagation();
               });
           },
-          templateUrl: 'client/components/userlist/adduser.html',
+          templateUrl: 'client/components/submission/adduser.html',
           targetEvent: $event
         });
       }
     }
 }
 
-app.component('userlist', {
-    templateUrl: 'client/components/userlist/userlist.html',
-    controllerAs: 'userlist',
-    controller: UserlistCtrl,
+app.component('submission', {
+    templateUrl: 'client/components/submission/submission.html',
+    controllerAs: 'submission',
+    controller: SubmissionCtrl,
     transclude: true
 })

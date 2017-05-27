@@ -40,6 +40,19 @@ Meteor.publish('tasks2', function (selector) {
     return Tasks.find(selector);
 });
 
+Meteor.publish('tasks3', function (selector) {
+    if(selector === null){
+      selector = {status: "active"};
+    } else {
+      selector = {project_id: selector, $and  : [
+              {status: "active"}
+            ]};
+    }
+
+    return Tasks.find(selector);
+});
+
+
 
 Meteor.methods({
 
@@ -84,6 +97,12 @@ Meteor.methods({
       var selector = {_id : taskID};
       var modifier = {$pull: {readingList: { readingTitle: readingTitle, link : link}}};
       var userUpsert = Tasks.update(selector, modifier);
+      return userUpsert;
+    },
+    upsertSubmit(taskID, taskname, dateNow, userID){
+      var selector = {_id: taskID};
+      var modifier = {$push: {submitList: {taskname: taskname, userID: userID, dateNow, dateNow  }}}
+      var userUpsert =  Tasks.update(selector, modifier);
       return userUpsert;
     }
 });

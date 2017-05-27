@@ -1,15 +1,9 @@
-<md-toolbar class="md-table-toolbar md-default" ng-hide="filter.show || selected2.length" flex>
+<md-toolbar class="md-table-toolbar md-default" flex>
 <div class="md-toolbar-tools" >
   <md-button class="md-default md-raised" aria-label="create" ng-click="addTask($event, selected)" ng-show="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'" >
     ADD TASK
   </md-button>
-  <div flex ng-hide="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">Make sure to complete each tasks before submitting</div>
-  <md-button ng-show="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'" class="md-icon-button" aria-label="Search" ng-click="filterShow()">
-    <md-tooltip md-direction="bottom">
-      Search
-    </md-tooltip>
-    <md-icon md-svg-icon="../../assets/img/black_search24.svg"></md-icon>
-  </md-button>
+  <div flex ng-hide="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">Your task list for today is</div>
 </div>
 </md-toolbar>
 <md-toolbar class="md-table-toolbar md-default"  flex="100" ng-show="filter.show">
@@ -29,38 +23,28 @@
 </div>
 </md-toolbar>
 
-<md-toolbar class="md-table-toolbar md-primary md-hue-1" flex="100" ng-show="selected2.length">
-<div class="md-toolbar-tools" layout-align="space-between center">
-  <div ng-model="selected" flex="80">{{selected2[0].taskname}}</div>
-  <md-button md-no-ink class="md-primary md-raised" aria-label="unassign" ng-click="openProfile2(selected2)">
-    VIEW TASK
-  </md-button>
-</div>
-</md-toolbar>
 <md-divider></md-divider>
 <md-table-container>
   <table md-table md-row-select ng-model="selected2" md-progress="promise" flex>
     <thead md-head md-order="query.order" md-on-reorder="profiles" class="md-head">
       <tr md-row>
         <th md-column ><span>Task name</span></th>
-        <th md-column ><span flex>Details</span></th>
-        <th md-column ><span>Created</span></th>
       </tr>
     </thead>
     <tbody md-body>
       <tr md-row md-select="task" md-select-id="task._id" md-auto-select ng-repeat="task in tasks" ng-cloak>
         <td md-cell>{{task.taskname}}</td>
-        <td md-cell flex>{{task.details}}</td>
-        <td md-cell>{{(task.createdAt | date: mediumDate)}}</td>
       </tr>
     </tbody>
   </table>
 </md-table-container>
 <md-toolbar class="md-table-toolbar md-default" flex="100" ng-show="selected2.length">
-<div class="md-toolbar-tools" layout-align="space-between center">
+<div class="md-toolbar-tools" layout="row" layout-align="end center">
   <md-button class="md-default md-raised" aria-label="unassign" ng-click="removeTask($event, selected2)" ng-show="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">
     DELETE TASK
   </md-button>
+  <md-button class="md-default md-raised" aria-label="unassign" ng-click="openProfile2(selected2)">
+    VIEW TASK
+  </md-button>
 </div>
 </md-toolbar>
-<md-table-pagination ng-hide="filter.show || selected2.length" md-limit="perPage" md-page="page" md-total="{{totalProfiles}}" md-on-paginate="profiles" md-page-select></md-table-pagination>

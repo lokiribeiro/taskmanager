@@ -1,12 +1,12 @@
 <md-toolbar class="md-primary md-hue-2" layout="row" layout-align="center center">
   <div flex="100" flex-gt-sm="70" layout="column" layout-fill>
     <div class="md-toolbar-tools">
-      <!-- <div ng-click="openSchool()" >
+    <a href="#" ng-click="projected()" >
       <md-tooltip md-direction="bottom">
-        Back
+        back to project
       </md-tooltip>
       <md-icon md-svg-icon="../../assets/img/white_backarrow24.svg"></md-icon>
-    </div> -->
+    </a>
       <h2 class="md-flex" style="padding-left: 24px !important;">View Task Details</h2>
       <span flex></span>
     </div>
@@ -15,7 +15,7 @@
 
 <div class="anim-slide-below-fade" data-anim-speed="500">
   <div layout="row" layout-align="center start" layout-wrap layout-fill ng-repeat="task in tasks">
-    <div flex layout="row" flex-gt-xs="70" layout-wrap layout-fill layout-padding >
+    <div flex layout="column" flex-gt-xs="70" layout-wrap layout-fill layout-padding >
     <div flex-gt-md="30" flex="100" flex-gt-xs="100" layout="column">
       <md-card>
         <md-card-title>
@@ -30,46 +30,6 @@
         </md-card-title>
         <md-card-actions>
           <md-card-icon-actions  layout="row" layout-align="center center">
-            <!-- <md-button class="md-icon-button " aria-label="transfer" ngf-select="uploadFiles($file, $invalidFiles)" >
-              <md-tooltip md-direction="bottom">
-                upload profile photo
-              </md-tooltip>
-              <md-icon md-svg-icon="../../assets/img/black_camera24.svg"></md-icon>
-            </md-button>
-            <md-menu md-position-mode="target-right target" ng-if="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'" >
-            <md-button class="md-icon-button " aria-label="transfer" ng-click="$mdOpenMenu($event)">
-              <md-tooltip md-direction="bottom">
-                Associate to role
-              </md-tooltip>
-              <md-icon md-svg-icon="../../assets/img/black_roleresp24.svg"></md-icon>
-            </md-button>
-            <md-menu-content width="3" >
-              <md-menu-item ng-repeat="role in roles" ng-hide="profiles_userroleID._id == role._id">
-                <md-button ng-click="associateRole($event, profile.profiles_firstname, profile.profiles_lastname, profile.profiles_userID, role._id, role.role)">
-                    <div layout="row" flex>
-                      <p flex>{{ profiles.profiles_userroleID == role._id ? '' :  role.role}}</p>
-                    </div>
-                </md-button>
-              </md-menu-item>
-            </md-menu-content>
-          </md-menu>
-            <md-menu md-position-mode="target-right target" ng-if="$root.userLoggedInRole == 'superadmin'">
-            <md-button class="md-icon-button " aria-label="transfer" ng-click="$mdOpenMenu($event)">
-              <md-tooltip md-direction="bottom">
-                Move user to another branch
-              </md-tooltip>
-              <md-icon md-svg-icon="../../assets/img/black_transferbranch24.svg"></md-icon>
-            </md-button>
-            <md-menu-content width="3" >
-              <md-menu-item ng-repeat="branch in branchesList" ng-hide="profile.profiles_branchID == branch._id">
-                <md-button ng-click="announceClick($event, branch, profile.profiles_firstname, profile.profiles_lastname, profile.profiles_userID, profile.profiles_type, profile.profiles_branchID)">
-                    <div layout="row" flex>
-                      <p flex>{{ profile.profiles_branchID == branch._id ? '' :  branch.branch_name}}</p>
-                    </div>
-                </md-button>
-              </md-menu-item>
-            </md-menu-content>
-          </md-menu> -->
           </md-card-icon-actions>
         </md-card-actions>
       </md-card>
@@ -79,18 +39,12 @@
   <div flex-gt-md="70" flex="100" flex-gt-xs="100" >
     <md-card>
     <md-tabs md-dynamic-height md-border-bottom>
-          <md-tab label="Info">
+          <md-tab label="Reading Lists" >
+            <readinglist></readinglist>
+          </md-tab>
+          <md-tab label="Submit Task">
               <taskinfo></taskinfo>
           </md-tab>
-          <!-- <md-tab label="Schedule" >
-              <schoolstudents></schoolstudents>
-          </md-tab> -->
-          <md-tab label="Reading Lists" >
-              <readinglist></readinglist>
-          </md-tab>
-          <!-- <md-tab label="Drive" >
-              <schoolstudents></schoolstudents>
-          </md-tab> -->
         </md-tabs>
     </md-card>
 

@@ -1,0 +1,7 @@
+{
+  "galaxy.meteor.com": {
+     "env": {
+       "MONGO_URL": "mongodb://lokigreyex:Accenture01@ds143191.mlab.com:43191/taskmanager"
+     }
+   }
+}

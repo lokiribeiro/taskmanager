@@ -121,7 +121,7 @@ app.config(function ($locationProvider, $urlRouterProvider, $stateProvider, $mdT
             }
         })
         .state('Task', {
-              url:'/:stateHolder/TSKP/:userID/:taskID',
+              url:'/:stateHolder/TSKP/:userID/:projectID/:taskID',
               template: '<taskprofile></taskprofile>',
               resolve: {
                   currentUser($q, $state) {
@@ -135,6 +135,7 @@ app.config(function ($locationProvider, $urlRouterProvider, $stateProvider, $mdT
               onEnter: function($rootScope, $stateParams, $state) {
                   $rootScope.stateHolder = $stateParams.stateHolder;
                   $rootScope.taskID = $stateParams.taskID;
+                  $rootScope.projectID = $stateParams.projectID;
               }
           })
           .state('Profile', {

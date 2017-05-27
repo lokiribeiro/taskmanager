@@ -12,6 +12,14 @@ class TaskprofileCtrl{
 
       $scope.taskID = $rootScope.taskID;
       $scope.rolesID = null;
+      $scope.projectID = $rootScope.projectID;
+      console.info('projectID', $scope.projectID);
+
+      $scope.projected = function () {
+        console.info('project', $scope.projectID);
+        var projectId = $scope.projectID;
+        $state.go('Projectpage', { userID : Meteor.userId(), stateHolder : 'Project', projectID : projectId });
+      }
 
       $scope.subscribe('tasks2', function () {
           return [$scope.getReactively('taskID')];
@@ -325,19 +333,6 @@ class TaskprofileCtrl{
             }
           });
         };
-
-        $scope.openRole = function () {
-          $state.go('Headmasterrole', {stateHolder : 'Headmaster', userID : Meteor.userId()});
-        }
-
-        $scope.openResp = function () {
-          $state.go('Headmasterresp', {stateHolder : 'Headmaster', userID : Meteor.userId()});
-        }
-
-        $scope.openSchool = function () {
-          var branchID = $scope.myBranch;
-          $state.go('Headmasterschool', {stateHolder : 'Headmaster', userID : Meteor.userId(), branchID : branchID});
-        }
 
     }
 }

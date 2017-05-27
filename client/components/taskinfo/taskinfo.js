@@ -8,19 +8,32 @@ class TaskinfoCtrl{
       'ngInject';
 
       $scope.taskID = $rootScope.taskID;
+      $scope.userID = $rootScope.userID;
 
       $scope.show = false;
+      $scope.notyet = true;
 
       $scope.subscribe('tasks2', function () {
           return [$scope.getReactively('taskID')];
       });
 
-      $scope.helpers({
+      $scope.helpers({      
         tasks(){
           var taskID = $scope.getReactively('taskID');
           console.info('taskID', taskID);
           var selector = {_id : taskID};
           var tasks = Tasks.find(taskID);
+          tasks.forEach(function(submit) {
+            if(submit.submitList){
+              var counted = submit.submitList.length;
+              console.info('counted', counted);
+              for(x=0;x<counted;x++){
+                if(submit.submitList[x].userID == $scope.userID){
+                  $scope.notyet = false;
+                }
+              }
+            }
+          })
           console.info('tasks', tasks);
           var proNum = tasks.count();
           console.info('pronum', proNum);
@@ -122,6 +135,89 @@ class TaskinfoCtrl{
           //$state.go('Headmasterprofile', {stateHolder : 'Headmaster', userID : Meteor.userId(), profileID : profileID});
       // On opening, add a delayed property which shows tooltips after the speed dial has opened
       // so that they have the proper position; if closing, immediately hide the tooltips
+
+      $scope.submitNow = function($event, taskID) {
+        var userID = $scope.userID;
+        console.info('userID', userID);
+        $mdDialog.show({
+          clickOutsideToClose: false,
+          escapeToClose: true,
+          locals: {
+            taskID: $scope.taskID,
+            userID: $scope.userID
+          },
+          transclude: true,
+          controller: function($mdDialog, taskID, userID, $scope) {
+              $scope.searchTerm = '';
+              console.info('projectID', userID);
+
+              $scope.done = false;
+              $scope.existing = false;
+              $scope.createdNow = false;
+              $scope.createdNows = false;
+              $scope.taskname = '';
+
+              $scope.subscribe('tasks2');
+
+              $scope.taskID = taskID;
+              $scope.userID = userID;
+              var taskDetail = Tasks.findOne($scope.taskID);
+              $scope.taskName = taskDetail.taskname;
+
+              $scope.submitTask = function() {
+                $scope.done = true;
+                $scope.createdNow = true;
+                $scope.errorNow = false;
+                var taskID = $scope.taskID;
+                var userID = $scope.userID;
+                var taskName = $scope.taskName;
+                var dateNow = new Date();
+                console.info('taskname', taskName);
+                    //var status = createUserFromAdmin(details);
+                $scope.register = Meteor.call('upsertSubmit', taskID, taskName, dateNow, userID, function(err, projectID) {
+                      if (err) {
+                        $scope.done = false;
+                        $scope.errorNow = true;
+                        $scope.createdNow = !$scope.createdNow;
+                        $scope.existing = true;
+                        window.setTimeout(function(){
+                          $scope.$apply();
+                        },2000);
+                        //do something with the id : for ex create profile
+                      } else {
+                        window.setTimeout(function(){
+                          $scope.$apply();
+                        },2000);
+                        $scope.createdNows = true;
+                        $scope.createdNow = true;
+                        $scope.done = false;
+                      }
+                    });
+              };
+
+              $scope.createAnother = function() {
+                $scope.createdNows = !$scope.createdNows;
+                $scope.createdNow = !$scope.createdNow;
+                //$scope.createdNow = '1';
+              }
+
+              $scope.clearSearchTerm = function() {
+                $scope.searchTerm = '';
+              };
+
+              $scope.closeDialog = function() {
+                $mdDialog.hide();
+                //$scope.createdNow = '1';
+              }
+
+              $element.find('input').on('keydown', function(ev) {
+                ev.stopPropagation();
+              });
+          },
+          templateUrl: 'client/components/taskinfo/submittask.html',
+          targetEvent: $event
+        });
+      };
     }
 }
 

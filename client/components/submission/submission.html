@@ -1,0 +1,55 @@
+<!-- <md-toolbar class="md-table-toolbar md-default"  flex="100" ng-show="filter.show">
+<div class="md-toolbar-tools">
+  <form name="filter.form" flex>
+    <md-input-container md-no-float class="md-block">
+    <md-icon md-svg-icon="../../assets/img/black_search24.svg"></md-icon>
+    <input type="text" ng-model="searchText" placeholder="search">
+    </md-input-container>
+  </form>
+  <md-button class="md-icon-button" aria-label="close" ng-click="closeFilter()">
+  <md-tooltip md-direction="bottom">
+    Close
+  </md-tooltip>
+  <md-icon md-svg-icon="../../assets/img/black_close24.svg"></md-icon>
+  </md-button>
+</div>
+</md-toolbar> -->
+
+<!-- <md-toolbar class="md-table-toolbar md-primary md-hue-1" flex="100" ng-show="selected2.length">
+<div class="md-toolbar-tools" layout-align="space-between center">
+  <div ng-model="selected" flex="80">{{selected2[0].name}}</div>
+  <md-button md-no-ink class="md-primary md-raised" aria-label="unassign" ng-click="null" ng-show="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">
+    VIEW USER
+  </md-button>
+</div>
+</md-toolbar> -->
+<md-divider></md-divider>
+<md-table-container>
+  <table md-table md-row-select ng-model="selected2" md-progress="promise" flex >
+    <thead md-head md-order="query.order" md-on-reorder="profiles" class="md-head">
+      <tr md-row>
+        <th md-column ><span></span></th>
+        <th md-column ><span flex>User</span></th>
+        <th md-column ><span >task name</span></th>
+        <th md-column ><span>submit date</span></th>
+      </tr>
+    </thead>
+    <tbody ng-repeat="task in tasks track by $index" md-body>
+      <tr md-row md-select="submit" ng-repeat="submit in task.submitList track by $index"  md-select-id="submit.userID" md-auto-select  ng-cloak>
+        <td md-cell ng-repeat="profile in profiles" ng-if="profile.profiles_userID == submit.userID"><img ng-src="{{profile.profiles_profilephoto}}" class="profile-pic2" alt="{{profile.profiles_firstname}}" /></td>
+        <td md-cell ng-repeat="profile in profiles" ng-if="profile.profiles_userID == submit.userID"flex>{{profile.name}}</td>
+        <td md-cell ng-repeat="profile in profiles" ng-if="profile.profiles_userID == submit.userID">{{submit.taskname}}</td>
+        <td md-cell ng-repeat="profile in profiles" ng-if="profile.profiles_userID == submit.userID">{{(submit.dateNow | date: mediumDate)}}</td>
+      </tr>
+    </tbody>
+  </table>
+</md-table-container>
+<!--
+<md-toolbar class="md-table-toolbar md-default" flex="100" ng-show="selected2.length">
+<div class="md-toolbar-tools" layout-align="space-between center">
+  <md-button class="md-default md-raised" aria-label="unassign" ng-click="null" ng-show="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">
+    REMOVE USER
+  </md-button>
+</div>
+</md-toolbar>-->
+<md-table-pagination ng-hide="filter.show || selected2.length" md-limit="perPage" md-page="page" md-total="{{totalProfiles}}" md-on-paginate="profiles" md-page-select></md-table-pagination>

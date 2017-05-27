@@ -32,6 +32,11 @@ Meteor.publish('users', function (searchText) {
   return Meteor.users.find(selector);
 });
 
+Meteor.publish('users2', function (searchText) {
+  var selector = {_id: searchText};
+  return Meteor.users.find(selector);
+});
+
 Meteor.publish('usersStudent', function (searchText) {
   var selector = null;
   var role = 'student';
@@ -76,11 +81,23 @@ Meteor.methods({
               return userUpsert;
             },
             upsertProjectUser(profileID, userType, projectID){
+              var arrayed = [];
               var selector = {_id: profileID};
               var modifier = {$set: {
-                user_projectID: projectID
+                user_projectID: projectID,
+                readingList: arrayed
               }};
               var typeUpsert = Meteor.users.upsert(selector, modifier);
               return typeUpsert;
-            }
+            },
+            upsertDoneReading(taskID, readingTitle, userID, activity){
+                      var selector = {_id: userID};
+                      if(activity === "done") {
+                          var modifier = {$push: {readingList: {readingTitle: readingTitle, taskID: taskID, status: true }}}
+                      } else {
+                          var modifier = {$pull: {readingList: {readingTitle: readingTitle, taskID: taskID }}}
+                      }
+                      var userUpsert =  Meteor.users.upsert(selector, modifier);
+                      return userUpsert;
+                    }
 })
