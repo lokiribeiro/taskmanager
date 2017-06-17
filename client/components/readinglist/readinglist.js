@@ -12,6 +12,7 @@ class ReadinglistCtrl{
 
       $scope.show = false;
       $scope.switches = 'true';
+      $scope.notyet = true;
 
       $scope.subscribe('tasks2', function () {
           return [$scope.getReactively('taskID')];
@@ -25,6 +26,17 @@ class ReadinglistCtrl{
           console.info('taskID', taskID);
           var selector = {_id : taskID};
           var tasks = Tasks.find(taskID);
+          tasks.forEach(function(submit) {
+            if(submit.submitList){
+              var counted = submit.submitList.length;
+              console.info('counted', counted);
+              for(x=0;x<counted;x++){
+                if(submit.submitList[x].userID == $scope.userID){
+                  $scope.notyet = false;
+                }
+              }
+            }
+          })
           console.info('tasks', tasks);
           var proNum = tasks.count();
           console.info('pronum', proNum);
@@ -250,6 +262,177 @@ class ReadinglistCtrl{
 
 
   }
+
+
+  $scope.submitNow = function($event, taskID) {
+    var userID = $scope.userID;
+    console.info('userID', userID);
+    $mdDialog.show({
+      clickOutsideToClose: false,
+      escapeToClose: true,
+      locals: {
+        taskID: $scope.taskID,
+        userID: $scope.userID
+      },
+      transclude: true,
+      controller: function($mdDialog, taskID, userID, $scope) {
+          $scope.searchTerm = '';
+          console.info('projectID', userID);
+
+          $scope.done = false;
+          $scope.existing = false;
+          $scope.createdNow = false;
+          $scope.createdNows = false;
+          $scope.taskname = '';
+
+          $scope.subscribe('tasks2');
+
+          $scope.taskID = taskID;
+          $scope.userID = userID;
+          var taskDetail = Tasks.findOne($scope.taskID);
+          $scope.taskName = taskDetail.taskname;
+
+          $scope.submitTask = function() {
+            $scope.done = true;
+            $scope.createdNow = true;
+            $scope.errorNow = false;
+            var taskID = $scope.taskID;
+            var userID = $scope.userID;
+            var taskName = $scope.taskName;
+            var link = $scope.link;
+            var comments = $scope.comments;
+            var dateNow = new Date();
+            console.info('taskname', taskName);
+                //var status = createUserFromAdmin(details);
+            $scope.register = Meteor.call('upsertSubmit', taskID, taskName, link, comments, dateNow, userID, function(err, projectID) {
+                  if (err) {
+                    $scope.done = false;
+                    $scope.errorNow = true;
+                    $scope.createdNow = !$scope.createdNow;
+                    $scope.existing = true;
+                    window.setTimeout(function(){
+                      $scope.$apply();
+                    },2000);
+                    //do something with the id : for ex create profile
+                  } else {
+                    window.setTimeout(function(){
+                      $scope.$apply();
+                    },2000);
+                    $scope.createdNows = true;
+                    $scope.createdNow = true;
+                    $scope.done = false;
+                  }
+                });
+          };
+
+          $scope.createAnother = function() {
+            $scope.createdNows = !$scope.createdNows;
+            $scope.createdNow = !$scope.createdNow;
+            //$scope.createdNow = '1';
+          }
+
+          $scope.clearSearchTerm = function() {
+            $scope.searchTerm = '';
+          };
+
+          $scope.closeDialog = function() {
+            $mdDialog.hide();
+            //$scope.createdNow = '1';
+          }
+
+          $element.find('input').on('keydown', function(ev) {
+            ev.stopPropagation();
+          });
+      },
+      templateUrl: 'client/components/taskinfo/submittask.html',
+      targetEvent: $event
+    });
+  };
+
+  $scope.writeBrief = function($event, taskID, readingTitle) {
+    var userID = $scope.userID;
+    $scope.readingTitle = readingTitle;
+    console.info('userID', readingTitle);
+    $mdDialog.show({
+      clickOutsideToClose: false,
+      escapeToClose: true,
+      locals: {
+        taskID: $scope.taskID,
+        userID: $scope.userID,
+        readingTitle: $scope.readingTitle
+      },
+      transclude: true,
+      controller: function($mdDialog, taskID, readingTitle, userID, $scope) {
+          $scope.searchTerm = '';
+          console.info('projectID', userID);
+
+          $scope.done = false;
+          $scope.existing = false;
+          $scope.createdNow = false;
+          $scope.createdNows = false;
+          $scope.taskname = '';
+
+          $scope.subscribe('tasks2');
+
+          $scope.taskID = taskID;
+          $scope.userID = userID;
+          $scope.readingTitle = readingTitle;
+
+          $scope.submitTask = function() {
+            $scope.done = true;
+            $scope.createdNow = true;
+            $scope.errorNow = false;
+            var taskID = $scope.taskID;
+            var userID = $scope.userID;
+            var readingTitle = $scope.readingTitle;
+            var comments = $scope.comments;
+            var dateNow = new Date();
+            console.info('taskname', readingTitle);
+                //var status = createUserFromAdmin(details);
+            $scope.register = Meteor.call('upsertBrief', taskID, readingTitle, comments, dateNow, userID, function(err, projectID) {
+                  if (err) {
+                    $scope.done = false;
+                    $scope.errorNow = true;
+                    $scope.createdNow = !$scope.createdNow;
+                    $scope.existing = true;
+                    window.setTimeout(function(){
+                      $scope.$apply();
+                    },2000);
+                    //do something with the id : for ex create profile
+                  } else {
+                    window.setTimeout(function(){
+                      $scope.$apply();
+                    },2000);
+                    $scope.createdNows = true;
+                    $scope.createdNow = true;
+                    $scope.done = false;
+                  }
+                });
+          };
+
+          $scope.createAnother = function() {
+            $scope.createdNows = !$scope.createdNows;
+            $scope.createdNow = !$scope.createdNow;
+            //$scope.createdNow = '1';
+          }
+
+          $scope.clearSearchTerm = function() {
+            $scope.searchTerm = '';
+          };
+
+          $scope.closeDialog = function() {
+            $mdDialog.hide();
+            //$scope.createdNow = '1';
+          }
+
+          $element.find('input').on('keydown', function(ev) {
+            ev.stopPropagation();
+          });
+      },
+      templateUrl: 'client/components/taskinfo/writebrief.html',
+      targetEvent: $event
+    });
+  };
 
 
     }

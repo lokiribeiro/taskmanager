@@ -1,5 +1,5 @@
 
-<span ng-repeat="task in tasks">
+<span ng-repeat="task in tasks track by $index">
 <div layout="row" layout-align="start start" layout-wrap >
   <div layout="column" layout-align="start start"  flex-gt-md="100" flex="100" flex-gt-xs="100" layout-padding >
     <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="task.details">INSTRUCTIONS
@@ -17,19 +17,44 @@
   <h3 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;" ng-hide="task.details">No task details yet. </h3>
 </div>
 </div>
+<md-subheader class="md-no-sticky" ng-if="$root.userLoggedInRole == 'user'" ng-if="!notyet"><strong>Briefs Written</strong></md-subheader>
+<span ng-repeat="brief in task.briefList track by $index" ng-if="$root.userLoggedInRole == 'user' && $root.userID == brief.userID">
+<div layout="column" layout-align="start start"  flex-gt-md="100" flex="100" flex-gt-xs="100" layout-padding >
+  <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="brief.comments">BRIEF for: {{brief.readingTitle}}
+  </h5>
+  <h6 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="brief.comments">{{brief.dateNow | date: medium}}
+  </h6>
+  <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;">{{brief.comments}}</h5>
+  <span layout="row" flex ng-if="show" layout-fill>
+  </span>
+</div>
+</span>
+<span ng-repeat="submit in task.submitList track by $index" ng-if="$root.userLoggedInRole == 'user' && $root.userID == submit.userID">
+<md-subheader class="md-no-sticky" ng-hide="$root.userLoggedInRole == 'superadmin'" ng-if="!notyet"><strong>Submission Details: Task Submitted</strong></md-subheader>
+<div layout="column" layout-align="start start"  flex-gt-md="100" flex="100" flex-gt-xs="100" layout-padding >
+  <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="submit.link">LINK
+  </h5>
+  <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;">{{submit.link}}</h5>
+  <span layout="row" flex ng-if="show" layout-fill>
+  </span>
+</div>
+<div layout="column" layout-align="start start"  flex-gt-md="100" flex="100" flex-gt-xs="100" layout-padding >
+  <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="submit.comments">COMMENT
+  </h5>
+  <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;">{{submit.comments}}</h5>
+  <span layout="row" flex ng-if="show" layout-fill>
+  </span>
+</div>
+</span>
 <div layout="row">
-  <md-button class="md-primary" md-no-ink aria-label="create" ng-click="submitNow($event, task._id)" ng-hide="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'" ng-if="notyet">
-    Submit Task
+  <md-button class="md-primary" md-no-ink aria-label="unassign" ng-click="editNow()" ng-if="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'" ng-hide="show">
+    EDIT TASK DETAILS
   </md-button>
-  <md-button class="md-primary" md-no-ink aria-label="create" ng-click="editNow()" ng-if="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">
-    Edit Task Details
+  <md-button class="md-primary" md-no-ink aria-label="create" ng-click="editNow()" ng-if="$root.userLoggedInRole == 'superadmin' && show">
+    CANCEL
   </md-button>
-  <span flex></span>
-  <md-button class="md-default" md-no-ink aria-label="create" ng-click="editNow()" ng-if="show">
-    Cancel
-  </md-button>
-  <md-button class="md-primary" md-no-ink aria-label="create" ng-click="updateUser(task.details)" ng-if="show">
-    Save
+  <md-button class="md-primary" md-no-ink aria-label="create" ng-click="updateUser(task.details)" ng-if="$root.userLoggedInRole == 'superadmin' && show">
+    SAVE
   </md-button>
 </div>
 </span>

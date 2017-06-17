@@ -1,6 +1,7 @@
 
 <span ng-repeat="task in tasks track by $index" ng-cloak>
-<md-subheader class="md-no-sticky" ng-hide="$root.userLoggedInRole == 'superadmin'">Toggle the switch to mark as read</md-subheader>
+<md-subheader class="md-no-sticky" ng-hide="$root.userLoggedInRole == 'superadmin'" ng-if="notyet">Toggle the switch to mark as read</md-subheader>
+<md-subheader class="md-no-sticky" ng-hide="$root.userLoggedInRole == 'superadmin'" ng-if="!notyet"><strong>This task has been submitted</strong></md-subheader>
 <md-list-item layout="row" layout-align="start start" layout-wrap ng-repeat="reading in task.readingList" ng-click="null" ng-hide="doneSearching">
   <div layout="column" layout-align="start start"  flex-gt-md="100" flex="100" flex-gt-xs="100" layout-padding >
     <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="reading.readingTitle">{{reading.readingTitle}}
@@ -12,19 +13,34 @@
   <div layout="row" layout-align="start start" layout-padding layout-wrap >
   <h3 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;" ng-hide="reading.readingTitle">No reading lists yet. </h3>
 </div>
+
+<span layout="row">
 <a href="{{reading.link}}" target="_blank" ng-if="reading.link">
-<md-button class="md-primary" md-no-ink aria-label="create" ng-hide="$root.userLoggedInRole == 'superadmin'">
-  Start reading
-</md-button>
+  <md-button class="md-icon-button" aria-label="delete" ng-hide="$root.userLoggedInRole == 'superadmin'" ng-if="notyet">
+    <md-tooltip md-direction="bottom">
+      Start reading
+    </md-tooltip>
+    <md-icon md-svg-icon="../../assets/img/black_track24.svg"></md-icon>
+  </md-button>
 </a>
+<md-button class="md-icon-button" aria-label="delete" ng-click="writeBrief($event, task._id, reading.readingTitle)" ng-hide="$root.userLoggedInRole == 'superadmin'" ng-if="notyet">
+  <md-tooltip md-direction="bottom">
+    Write Brief
+  </md-tooltip>
+  <md-icon md-svg-icon="../../assets/img/black_edit24.svg"></md-icon>
+</md-button>
 <md-button class="md-primary" md-no-ink aria-label="create" ng-if="$root.userLoggedInRole == 'superadmin'" ng-click="deleteNew(reading)">
   Delete
 </md-button>
+</span>
 
-<md-switch  ng-hide="$root.userLoggedInRole == 'superadmin'" ng-if="reading.link" aria-label="readingSwitch" class="md-accent"  ng-model="enabled[$index]"  ng-change="markRead(reading.readingTitle)"></md-switch>
+<md-switch  ng-hide="$root.userLoggedInRole == 'superadmin'" ng-if="reading.link && notyet" aria-label="readingSwitch" class="md-accent"  ng-model="enabled[$index]"  ng-change="markRead(reading.readingTitle)"></md-switch>
 </md-list-item>
 <md-progress-linear md-mode="indeterminate" flex ng-show="doneSearching"></md-progress-linear>
 <div layout="row">
+  <md-button class="md-primary" md-no-ink aria-label="create" ng-click="submitNow($event, task._id)" ng-hide="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'" ng-if="notyet">
+    Submit Task
+  </md-button>
   <md-button class="md-primary" md-no-ink aria-label="create" ng-click="newReading(task._id)" ng-if="$root.userLoggedInRole == 'superadmin'">
     Add new reading
   </md-button>

@@ -5,12 +5,12 @@ import Projects from '/imports/models/projects.js';
 
 class ProjectpageCtrl{
 
-  constructor($rootScope, $scope, $element, $timeout, $mdSidenav, $log, $mdDialog, $state){
+  constructor($rootScope, $scope, $element, $timeout, $mdSidenav, $log, $mdDialog, $state, $mdToast){
       'ngInject';
 
       console.info('branchID', $rootScope.projectID);
       $scope.projectID = $rootScope.projectID;
-      var branchId =   $scope.branchID ;
+      $scope.userID = $rootScope.userID;
 
       $scope.show = false;
 
@@ -40,6 +40,34 @@ class ProjectpageCtrl{
                 return projects;
         }
       });//helpers
+
+      var last = {
+        bottom: true,
+        top: false,
+        left: true,
+        right: false
+      };
+
+      $scope.toastPosition = angular.extend({},last);
+
+      $scope.getToastPosition = function() {
+        sanitizePosition();
+
+        return Object.keys($scope.toastPosition)
+        .filter(function(pos) { return $scope.toastPosition[pos]; })
+        .join(' ');
+      };
+
+      function sanitizePosition() {
+        var current = $scope.toastPosition;
+
+        if ( current.bottom && last.top ) current.top = false;
+        if ( current.top && last.bottom ) current.bottom = false;
+        if ( current.right && last.left ) current.left = false;
+        if ( current.left && last.right ) current.right = false;
+
+        last = angular.extend({},current);
+      }
 
       $scope.openDialog = function ($event) {
           $scope.projectID = $scope.projectID;
@@ -101,170 +129,54 @@ class ProjectpageCtrl{
         });
         };
 
-      $scope.addStaff = function($event, branchID) {
-        $mdDialog.show({
-          clickOutsideToClose: false,
-          escapeToClose: true,
-          locals: {
-            branchID: $scope.branchID
-          },
-          transclude: true,
-          controller: function($mdDialog, branchID, $scope) {
-              $scope.searchTerm = '';
-              $scope.userType = 'Non-teaching staff';
-              console.info('branchID', branchID);
-              $scope.userBrID = '';
+        $scope.claimProject = function() {
+          $scope.done = true;
+          $scope.createdNow = false;
+          $createdNows = false;
+          var projectID = $scope.projectID ;
+          var userType = 'user';
+          var userID = $scope.userID;
+          var projectID = $scope.projectID;
+          console.info('userID', userID);
+          console.info('projectID', projectID);
 
-              $scope.done = false;
-              $scope.existing = false;
-              $scope.createdNow = false;
-              $scope.createdNows = false;
+          $scope.register = Meteor.call('upsertProjectUser', userID, userType, projectID, function(err, userID) {
+            if (err) {
+               console.log('error here');
+              //do something with the id : for ex create profile
+            } else {
+             console.log('continue next user');
+            }
+          });
 
-              $scope.subscribe('users');
-
-              $scope.subscribe('branchesAdmin', function () {
-                  return [$scope.getReactively('userBrID')];
-              });
-
-              $scope.helpers({
-                users(){
-                      var sort  = 1;
-                      var selector = {};
-                      var users = Meteor.users.find(
-                            selector, { sort: {name: sort} }
-                        );
-                      return users;
-                  }
-              });
-
-              $scope.branchID = branchID;
-
-              $scope.addUsers = function(details) {
-                $scope.done = true;
-                $scope.createdNow = true;
-                var branchId = $scope.branchID ;
-                var userType = $scope.userType;
-                var max = details.user.length;
-                console.info('max', max);
-
-                if(max > 1){
-                  for(i=0;i<max;i++){
-                    var userID = details.user[i]._id;
-                    console.info('userID', userID);
-                    var selector = {branches_schooladmin: userID};
-                    var branchExist = Branches.find(selector);
-                    console.info('branchExist', branchExist);
-                    branchExist.forEach(function(branch){
-                      var branchList = branch._id;
-                      var selector = {_id: branchList};
-                      var modifier = {$set: {
-                        branches_schooladmin: '',
-                        branches_schooladminname: ''
-                      }};
-                      var removeAdmin = Branches.update(selector,modifier);
-                    });
-                    //var status = createUserFromAdmin(details);
-                    Meteor.call('upsertNewBranchFromAdmin', userID, branchId, function(err, detailss) {
-                      if (err) {
-                          //do something with the id : for ex create profile
-                        console.log('error upserting branch to meteor.user()');
-                     }
-                    });
-
-                    $scope.register = Meteor.call('upsertProfileFromStaff', userID, userType, branchId, function(err, userID) {
-                      if (err) {
-                         console.log('error here');
-                        //do something with the id : for ex create profile
-                      } else {
-                       console.log('continue next user');
-                      }
-                    });
-                    }
-                    window.setTimeout(function(){
-                      $scope.$apply();
-                    },2000);
-                    $scope.createdNows = true;
-                    $scope.createdNow = true;
-                    $scope.done = false;
-                  } else if(max == 1) {
-                    $scope.createdNow = !$scope.createdNow;
-                    var userID = details.user[0]._id;
-                    console.info('userID', userID);
-                    var selector = {branches_schooladmin: userID};
-                    var branchExist = Branches.find(selector);
-                    console.info('branchExist', branchExist);
-                    var counterbranch = branchExist.count();
-                    console.info('counter', counterbranch );
-                    branchExist.forEach(function(branch){
-                      var branchList = branch._id;
-                      console.info('branchList', branchList);
-                      var selector = {_id: branchList};
-                      var modifier = {$set: {
-                        branches_schooladmin: '',
-                        branches_schooladminname: ''
-                      }};
-                      var removeAdmin = Branches.update(selector,modifier);
-                    });
-                    //var status = createUserFromAdmin(details);
-
-                    Meteor.call('upsertNewBranchFromAdmin', userID, branchId, function(err, detailss) {
-                      if (err) {
-                          //do something with the id : for ex create profile
-                        console.log('error upserting branch to meteor.user()');
-                     }
-                    });
-
-                    $scope.register = Meteor.call('upsertProfileFromStaff', userID, userType, branchId, function(err, userID) {
-                      if (err) {
-                        $scope.done = false;
-                        $scope.createdNow = !$scope.createdNow;
-                        $scope.existing = true;
-                        window.setTimeout(function(){
-                          $scope.$apply();
-                        },2000);
-                        //do something with the id : for ex create profile
-                      } else {
-                        window.setTimeout(function(){
-                          $scope.$apply();
-                        },2000);
-                        $scope.createdNows = true;
-                        $scope.createdNow = true;
-                        $scope.done = false;
-                      }
-                    });
-                  } else {
-                    console.log('nothing to do');
-                    $scope.done = false;
-                    $scope.createdNow = false;
-                  }
-                };
-
-              $scope.createAnother = function() {
-                $scope.createdNows = !$scope.createdNows;
-                $scope.createdNow = !$scope.createdNow;
-                //$scope.createdNow = '1';
-              }
-
-              $scope.clearSearchTerm = function() {
-                $scope.searchTerm = '';
-              };
-
-              $scope.closeDialog = function() {
-                $mdDialog.hide();
-                //$scope.createdNow = '1';
-              }
-
-              $element.find('input').on('keydown', function(ev) {
-                ev.stopPropagation();
-              });
-          },
-          templateUrl: 'client/components/headmaster/schoolUsers/addUser/adduser.html',
-          targetEvent: $event
-        });
-      }
-
-
-
+          $scope.register = Meteor.call('upsertProjectFromUser', userID, userType, projectID, function(err, userID) {
+            if (err) {
+              var toasted = 'Error updating project details.';
+              var pinTo = $scope.getToastPosition();
+              $mdToast.show(
+                $mdToast.simple()
+                .textContent(toasted)
+                .position(pinTo )
+                .hideDelay(3000)
+                .action('HIDE')
+                .highlightAction(true)
+                .highlightClass('md-accent')
+              );
+            } else {
+              var toasted = 'Proect claimed';
+              var pinTo = $scope.getToastPosition();
+              $mdToast.show(
+                $mdToast.simple()
+                .textContent(toasted)
+                .position(pinTo )
+                .hideDelay(3000)
+                .action('HIDE')
+                .highlightAction(true)
+                .highlightClass('md-accent')
+              );
+            }
+          });
+        }
 
     }
 }

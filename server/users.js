@@ -73,9 +73,11 @@ Meteor.methods({
               return branchUpsert;
             },
             upsertUserFromAdmin(userID, userFirstname){
+              var userType = "user";
               var selector = {_id: userID};
               var modifier = {$set: {
-                name: userFirstname
+                name: userFirstname,
+                role: userType
               }};
               var userUpsert = Meteor.users.upsert(selector, modifier);
               return userUpsert;

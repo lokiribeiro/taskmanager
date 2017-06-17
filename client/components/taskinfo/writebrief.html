@@ -2,17 +2,12 @@
   <form name="createuserForm" ng-submit="submitTask()">
     <md-dialog-content layout="column" layout-align="start start" layout-wrap layout-fill layout-padding flex>
     <div layout="row" flex>
-      <h2 style="font-weight:normal" ng-hide="createdNow">Submit Task? </h2>
-      <h2 style="font-weight:normal" ng-if="done">Submitting Task</h2>
-      <h2 style="font-weight:normal" ng-if="createdNows"><md-icon md-svg-icon="../../assets/img/indigo_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Task Submitted</h2>
+      <h2 style="font-weight:normal" ng-hide="createdNow">Write Brief</h2>
+      <h2 style="font-weight:normal" ng-if="done">Submitting Brief</h2>
+      <h2 style="font-weight:normal" ng-if="createdNows"><md-icon md-svg-icon="../../assets/img/indigo_check24.svg" style="margin: auto 3px auto 0;" ></md-icon> Brief updated </h2>
       <span flex></span>
     </div>
     <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
-    <span layout="row" ng-hide="createdNow" layout-fill>
-      <md-input-container  md-no-float class="md-block" style="margin: 10px 0 !important;">
-       <input ng-model="link" aria-label="Link" type="text" placeholder="Link" required >
-      </md-input-container>
-    </span>
     <span layout="row" ng-hide="createdNow" layout-fill>
       <md-input-container  md-no-float class="md-block" style="margin: 10px 0 !important;">
        <input ng-model="comments" aria-label="Comments" type="text" placeholder="Comments" >

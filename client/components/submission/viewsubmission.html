@@ -1,0 +1,75 @@
+<md-dialog style="opacity: 1 !important;" aria-label="Create a new user" layout="column" layout-align="start center">
+  <form name="createuserForm" ng-submit="submitTask()">
+    <md-dialog-content layout="column" layout-align="start start" layout-wrap layout-fill layout-padding flex>
+    <md-progress-linear md-mode="indeterminate" flex ng-show="done"></md-progress-linear>
+    <span layout="column" ng-repeat="task in tasks track by $index" ng-if="task._id == submissionDetails.taskID">
+    <span ng-repeat="brief in task.briefList track by $index" ng-if="submissionDetails.userID == brief.userID && submissionDetails.taskID == task._id">
+      <md-subheader class="md-no-sticky"><strong>Briefs Written</strong></md-subheader>
+    <div layout="column" layout-align="start start"  flex-gt-md="100" flex="100" flex-gt-xs="100" layout-padding >
+      <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="brief.comments">BRIEF for: {{brief.readingTitle}}
+      </h5>
+      <h6 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="brief.comments">{{brief.dateNow | date: medium}}
+      </h6>
+      <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;">{{brief.comments}}</h5>
+      <span layout="row" flex ng-if="show" layout-fill>
+      </span>
+    </div>
+    </span>
+    <span ng-repeat="submit in task.submitList track by $index" ng-if="submissionDetails.userID == submit.userID && submissionDetails.taskID == task._id">
+    <md-subheader class="md-no-sticky"><strong>Submission Details: Task Submitted</strong></md-subheader>
+    <div layout="column" layout-align="start start"  flex-gt-md="100" flex="100" flex-gt-xs="100" layout-padding >
+      <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="submit.link">LINK
+      </h5>
+      <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;">{{submit.link}}</h5>
+      <span layout="row" flex ng-if="show" layout-fill>
+      </span>
+    </div>
+    <div layout="column" layout-align="start start"  flex-gt-md="100" flex="100" flex-gt-xs="100" layout-padding >
+      <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; padding-bottom: 0 !important;" ng-if="submit.comments">COMMENT
+      </h5>
+      <h5 style="margin-top: 0 !important; margin-bottom: 0 !important; color: #555; font-weight: normal !important; padding-top: 0 !important;">{{submit.comments}}</h5>
+      <span layout="row" flex ng-if="show" layout-fill>
+      </span>
+    </div>
+    </span>
+    <!-- <div layout="row">
+      <md-button class="md-primary" md-no-ink aria-label="unassign" ng-click="editNow()" ng-if="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'" ng-hide="show">
+        EDIT TASK DETAILS
+      </md-button>
+      <md-button class="md-primary" md-no-ink aria-label="create" ng-click="editNow()" ng-if="$root.userLoggedInRole == 'superadmin' && show">
+        CANCEL
+      </md-button>
+      <md-button class="md-primary" md-no-ink aria-label="create" ng-click="updateUser(task.details)" ng-if="$root.userLoggedInRole == 'superadmin' && show">
+        SAVE
+      </md-button>
+    </div> -->
+    </span>
+
+    <!-- hide here -->
+    <!-- address -->
+    <!-- end here -->
+    <span layout="column" layout-align="start start" flex ng-if="createdNows">
+      <span layout="row">
+      <p>
+        Task has been submitted.
+      </p>
+      </span>
+    </span>
+  </md-dialog-content>
+    <md-dialog-actions >
+      <span layout="row" layout-align="space-between start" layout-fill>
+      <!-- hide these -->
+    <md-button ng-hide="createdNow" ng-click="closeDialog()">
+      CLOSE
+    </md-button>
+      <!--<md-button type="submit" ng-hide="createdNow" class="md-primary">
+        SUBMIT
+      </md-button> -->
+      <!-- end hide -->
+        <md-button ng-if="createdNows" ng-click="closeDialog()" class="md-primary">
+          DONE
+        </md-button>
+      </span>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

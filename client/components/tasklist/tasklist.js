@@ -36,26 +36,35 @@ class TasklistCtrl{
       $scope.enabled = [];
       $scope.installed = [];
 
-      $scope.subscribe('tasks', function () {
-          return [$scope.getReactively('searchText')];
+      $scope.subscribe('tasks2', function () {
+          return [$scope.getReactively('taskID')];
       });
 
       $scope.subscribe('users');
       $scope.subscribe('projects');
 
       $scope.helpers({
-          tasks(){
-            //var sort = 1;
-            //var selector = {};
-            //var modifier= {sort: {profiles_firstname: sort}};
-            var projectID = $scope.projectID;
-            var selector = {project_id: projectID};
-            var tasks = Tasks.find(selector);
-            var count = tasks.count();
-            console.info('profiles', tasks);
-            console.info('count', count);
-            return tasks;
-          }
+        tasks(){
+          var taskID = $scope.getReactively('taskID');
+          console.info('taskID', taskID);
+          var selector = {};
+          var tasks = Tasks.find();
+          tasks.forEach(function(submit) {
+            if(submit.submitList){
+              var counted = submit.submitList.length;
+              console.info('counted', counted);
+              for(x=0;x<counted;x++){
+                if(submit.submitList[x].userID == $scope.userID){
+                  $scope.notyet = false;
+                }
+              }
+            }
+          })
+          console.info('tasks', tasks);
+          var proNum = tasks.count();
+          console.info('pronum', proNum);
+          return tasks;
+        }
 
       })//helpers
 

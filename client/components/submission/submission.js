@@ -441,6 +441,110 @@ class SubmissionCtrl{
           targetEvent: $event
         });
       }
+
+
+      $scope.viewSubmission = function($event, submissionDetails) {
+        $scope.submissionDetails = submissionDetails;
+        console.info('userID', submissionDetails);
+        $mdDialog.show({
+          clickOutsideToClose: false,
+          escapeToClose: true,
+          locals: {
+            submissionDetails: $scope.submissionDetails
+          },
+          transclude: true,
+          controller: function($mdDialog, submissionDetails, $scope) {
+              $scope.searchTerm = '';
+              console.info('projectID', submissionDetails);
+              $scope.submissionDetails = submissionDetails;
+
+              $scope.done = false;
+              $scope.existing = false;
+              $scope.createdNow = false;
+              $scope.createdNows = false;
+              $scope.taskname = '';
+
+              $scope.subscribe('tasks2');
+
+              $scope.helpers({
+                tasks(){
+                  var taskID = $scope.getReactively('taskID');
+                  console.info('taskID', taskID);
+                  var selector = {};
+                  var tasks = Tasks.find();
+                  tasks.forEach(function(submit) {
+                    if(submit.submitList){
+                      var counted = submit.submitList.length;
+                      console.info('counted', counted);
+                      for(x=0;x<counted;x++){
+                        if(submit.submitList[x].userID == $scope.userID){
+                          $scope.notyet = false;
+                        }
+                      }
+                    }
+                  })
+                  console.info('tasks', tasks);
+                  var proNum = tasks.count();
+                  console.info('pronum', proNum);
+                  return tasks;
+                }
+              })
+
+              $scope.submitTask = function() {
+                $scope.done = true;
+                $scope.createdNow = true;
+                $scope.errorNow = false;
+                var taskID = $scope.taskID;
+                var userID = $scope.userID;
+                var readingTitle = $scope.readingTitle;
+                var comments = $scope.comments;
+                var dateNow = new Date();
+                console.info('taskname', readingTitle);
+                    //var status = createUserFromAdmin(details);
+                $scope.register = Meteor.call('upsertBrief', taskID, readingTitle, comments, dateNow, userID, function(err, projectID) {
+                      if (err) {
+                        $scope.done = false;
+                        $scope.errorNow = true;
+                        $scope.createdNow = !$scope.createdNow;
+                        $scope.existing = true;
+                        window.setTimeout(function(){
+                          $scope.$apply();
+                        },2000);
+                        //do something with the id : for ex create profile
+                      } else {
+                        window.setTimeout(function(){
+                          $scope.$apply();
+                        },2000);
+                        $scope.createdNows = true;
+                        $scope.createdNow = true;
+                        $scope.done = false;
+                      }
+                    });
+              };
+
+              $scope.createAnother = function() {
+                $scope.createdNows = !$scope.createdNows;
+                $scope.createdNow = !$scope.createdNow;
+                //$scope.createdNow = '1';
+              }
+
+              $scope.clearSearchTerm = function() {
+                $scope.searchTerm = '';
+              };
+
+              $scope.closeDialog = function() {
+                $mdDialog.hide();
+                //$scope.createdNow = '1';
+              }
+
+              $element.find('input').on('keydown', function(ev) {
+                ev.stopPropagation();
+              });
+          },
+          templateUrl: 'client/components/submission/viewsubmission.html',
+          targetEvent: $event
+        });
+      };
     }
 }
 

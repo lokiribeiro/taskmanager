@@ -1,10 +1,9 @@
-<div class="anim-slide-below-fade" data-anim-speed="500">
+<div class="anim-slide-below-fade" data-anim-speed="500" ng-cloak>
 <md-content flex layout-padding layout-fill style="background-color: transparent !important; overflow: hidden !important;">
   <div layout="column"  flex>
-    <div layout="row" layout-align="center center" layout-padding layout-wrap layout-fill style="padding-bottom: 32px; padding-top: 10px;" ng-cloak>
-      <h1 hide-xs style="font-weight: normal;" layout="row" layout-fill layout-align ="center center">Welcome Back! </h1>
-      <h3 hide-xs style="font-weight: normal;" layout="row" layout-fill layout-align ="center center">Ready to dive in? Select a task to get started </h3>
-      <md-card  ng-repeat="project in projects" ng-click="projected(project._id)"  class="card-1"  flex-gt-sm="50" flex-gt-md="30" layout-wrap layout-fill style="margin: 10px 10px 0 0;" ng-if="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInProject == project._id">
+    <div layout="row" layout-align="center center" layout-padding layout-wrap layout-fill style="padding-bottom: 32px; padding-top: 10px;" ng-cloak ng-if="$root.userLoggedInRole == 'user' && $root.userLoggedInProject">
+      <h1 hide-xs style="font-weight: normal;" layout="row" layout-fill layout-align ="center center" ng-if="$root.userLoggedInRole == 'user' && $root.userLoggedInProject">Current Project </h1>
+      <md-card  ng-repeat="project in projects" ng-click="projected(project._id)"  class="card-1"  flex-gt-sm="50" flex-gt-md="30" layout-wrap layout-fill style="margin: 10px 10px 0 0;" ng-if="$root.userLoggedInProject == project._id">
         <md-card-title>
           <md-card-title-text>
             <a href="#" layout="column" layout-align="start start" ng-click="projected(project._id)">
@@ -15,6 +14,33 @@
         </md-card-title>
         <a href="#" ng-click="projected(project._id)">
         <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-icon-button" ng-click="projected(project._id)" aria-label="Apps">
+            <md-icon md-svg-icon="../../assets/img/black_launch24.svg"></md-icon>
+          </md-button>
+        </md-card-actions>
+      </a>
+      </md-card>
+      <!-- <md-card ng-click="redirect(userapp.appName)" class="card-1" ng-repeat="userapp in userapps" flex-gt-sm="50" flex-gt-md="25" layout-wrap layout-fill style="margin: 10px 10px 0 0;" layout-align="center center">
+        <img ng-src="{{userapp.appLoc}}" alt="{{userapp.appName}}" style="width: 48px !important; height: 48px !important;">
+        <md-card-actions layout="row" layout-align="end center">
+          <span class="md-headline">{{userapp.appName}}</span>
+        </md-card-actions>
+      </md-card> -->
+    </div>
+    <div layout="row" layout-align="center center" layout-padding layout-wrap layout-fill style="padding-bottom: 32px; padding-top: 10px;" ng-cloak>
+      <h1 hide-xs style="font-weight: normal;" layout="row" layout-fill layout-align ="center center">Existing Projects </h1>
+      <h3 hide-xs style="font-weight: normal;" layout="row" layout-fill layout-align ="center center">Browse through some existing projects</h3>
+      <md-card  ng-repeat="project in projects" ng-click="projected(project._id)"  class="card-1"  flex-gt-sm="50" flex-gt-md="30" layout-wrap layout-fill style="margin: 10px 10px 0 0;" ng-hide="$root.userLoggedInProject == project._id" ng-cloak>
+        <md-card-title ng-cloak>
+          <md-card-title-text>
+            <a href="#" layout="column" layout-align="start start" ng-click="projected(project._id)">
+            <span class="md-headline">{{project.project_name}}</span>
+            <span class="md-subhead">{{project.field}}</span>
+          </a>
+          </md-card-title-text>
+        </md-card-title>
+        <a href="#" ng-click="projected(project._id)">
+        <md-card-actions layout="row" layout-align="end center" ng-cloak>
           <md-button class="md-icon-button" ng-click="projected(project._id)" aria-label="Apps">
             <md-icon md-svg-icon="../../assets/img/black_launch24.svg"></md-icon>
           </md-button>

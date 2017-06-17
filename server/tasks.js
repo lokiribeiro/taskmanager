@@ -99,9 +99,15 @@ Meteor.methods({
       var userUpsert = Tasks.update(selector, modifier);
       return userUpsert;
     },
-    upsertSubmit(taskID, taskname, dateNow, userID){
+    upsertSubmit(taskID, taskname, link, comments, dateNow, userID){
       var selector = {_id: taskID};
-      var modifier = {$push: {submitList: {taskname: taskname, userID: userID, dateNow, dateNow  }}}
+      var modifier = {$push: {submitList: {taskID: taskID, taskname: taskname, userID: userID, dateNow: dateNow, link: link, comments: comments  }}}
+      var userUpsert =  Tasks.update(selector, modifier);
+      return userUpsert;
+    },
+    upsertBrief(taskID, readingTitle, comments, dateNow, userID){
+      var selector = {_id: taskID};
+      var modifier = {$push: {briefList: {taskID: taskID, readingTitle: readingTitle, userID: userID, dateNow: dateNow, comments: comments  }}}
       var userUpsert =  Tasks.update(selector, modifier);
       return userUpsert;
     }

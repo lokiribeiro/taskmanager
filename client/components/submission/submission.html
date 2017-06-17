@@ -23,6 +23,14 @@
   </md-button>
 </div>
 </md-toolbar> -->
+<md-toolbar class="md-table-toolbar md-primary md-hue-1" flex="100" ng-show="selected2.length">
+<div class="md-toolbar-tools" layout-align="space-between center">
+  <div ng-model="selected" flex="80">{{selected2[0].name}}</div>
+  <md-button md-no-ink class="md-primary md-raised" aria-label="unassign" ng-click="viewSubmission($event, selected2[0])" ng-show="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">
+    VIEW
+  </md-button>
+</div>
+</md-toolbar>
 <md-divider></md-divider>
 <md-table-container>
   <table md-table md-row-select ng-model="selected2" md-progress="promise" flex >

@@ -3,7 +3,7 @@
   <md-button class="md-default md-raised" aria-label="create" ng-click="addTask($event, selected)" ng-show="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'" >
     ADD TASK
   </md-button>
-  <div flex ng-hide="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">Your task list for today is</div>
+  <div flex ng-hide="$root.userLoggedInRole == 'superadmin' || $root.userLoggedInRole == 'admin'">The task list for today is</div>
 </div>
 </md-toolbar>
 <md-toolbar class="md-table-toolbar md-default"  flex="100" ng-show="filter.show">
@@ -31,9 +31,9 @@
         <th md-column ><span>Task name</span></th>
       </tr>
     </thead>
-    <tbody md-body>
-      <tr md-row md-select="task" md-select-id="task._id" md-auto-select ng-repeat="task in tasks" ng-cloak>
-        <td md-cell>{{task.taskname}}</td>
+    <tbody md-body ng-repeat="task in tasks" ng-if="task.project_id == projectID">
+      <tr md-row md-select="task" md-select-id="task._id" md-auto-select ng-cloak>
+        <td md-cell><strong ng-repeat="submit in task.submitList track by $index" ng-if="$root.userID == submit.userID">Completed: </strong>{{task.taskname}}</td>
       </tr>
     </tbody>
   </table>
